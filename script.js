@@ -366,8 +366,6 @@ function renderGrid(){
             grid.appendChild(card);
      });
 }
-});
-}
 
 function addToCart(p, vi, qty, pat, patKey){
      qty = Math.max(1, qty||1);
