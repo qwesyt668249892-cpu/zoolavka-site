@@ -70,7 +70,7 @@ header{position:sticky;top:0;z-index:40;background:rgba(251,245,236,.92);backdro
 .herovid{position:absolute;top:50%;right:26%;transform:translateY(-50%);width:min(14%,150px);aspect-ratio:3/4;object-fit:contain;z-index:1;pointer-events:none;filter:drop-shadow(0 10px 16px rgba(70,44,16,.18))}
 @media(max-width:900px){.herovid{position:absolute;left:50%;top:auto;right:auto;transform:translateX(-50%);width:min(34vw,200px);bottom:16px}}
 @media(max-width:640px){.herovid{left:50%;width:min(48vw,190px);bottom:14px}}
-.heropromo{position:absolute;top:50%;right:2%;transform:translateY(-50%);width:min(19%,190px);aspect-ratio:3/4;background:#fff;border:3px solid var(--brand);border-radius:18px;box-shadow:0 12px 30px rgba(70,44,16,.20);z-index:1;padding:14px;display:block}
+.heropromo{position:absolute;top:50%;right:8%;transform:translateY(-50%);width:min(19%,190px);aspect-ratio:3/4;background:#fff;border:3px solid var(--brand);border-radius:18px;box-shadow:0 12px 30px rgba(70,44,16,.20);z-index:1;padding:14px;display:block}
 .heropromo img{width:100%;height:100%;object-fit:contain}
 .heropromo:hover{box-shadow:0 16px 36px rgba(70,44,16,.26)}
 @media(max-width:900px){.heropromo{display:none}}
