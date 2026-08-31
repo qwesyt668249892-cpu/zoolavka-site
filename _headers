@@ -1,0 +1,9 @@
+# Файл для хостингов типа Netlify / Cloudflare Pages (на обычном хостинге не нужен — там работает .htaccess)
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/styles.css
+  Cache-Control: public, max-age=2592000
+
+/script.js
+  Cache-Control: public, max-age=2592000
