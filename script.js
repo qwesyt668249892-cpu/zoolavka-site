@@ -6,7 +6,8 @@ const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонт
 const TG_BOT_TOKEN = "8713647672:AAG7TLFs3OGaZc7gqZWQIsmFzac8axNUk18";
 const TG_CHAT_ID   = "958072190";
 
-const HERO_VIDEO = "";
+const HERO_VIDEO = "images/herodog.webm";
+const HERO_VIDEO_FALLBACK = "images/herodogfallback.mp4";
 
 const CATS = [
    {id:"dog",  label:"Корм · собаки"},
@@ -558,9 +559,15 @@ renderGrid(); renderCart();
      if(HERO_VIDEO){
             if(dog) dog.style.display='none';
             const v=document.createElement('video');
-            v.className='herovid'; v.src=HERO_VIDEO;
+            v.className='herovid';
             v.autoplay=true; v.loop=true; v.muted=true; v.defaultMuted=true; v.playsInline=true;
             v.setAttribute('muted',''); v.setAttribute('playsinline',''); v.setAttribute('autoplay',''); v.setAttribute('loop','');
+            const srcWebm=document.createElement('source'); srcWebm.src=HERO_VIDEO; srcWebm.type='video/webm; codecs="vp9"';
+            v.appendChild(srcWebm);
+            if(HERO_VIDEO_FALLBACK){
+                 const srcMp4=document.createElement('source'); srcMp4.src=HERO_VIDEO_FALLBACK; srcMp4.type='video/mp4';
+                 v.appendChild(srcMp4);
+            }
             host.appendChild(v);
             v.play&&v.play().catch(()=>{});
             return;
