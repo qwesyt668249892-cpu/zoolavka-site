@@ -75,6 +75,28 @@ const PRODUCTS = [
 ];
 /* =================================================================== */
 
+/* ================= АКЦИЯ НЕДЕЛИ =================
+   Чтобы завести новую акцию: поменяй id (код товара из списка PRODUCTS выше),
+   price (акционная цена) и until (дата-время окончания, формат
+   "ГГГГ-ММ-ДДTЧЧ:ММ:СС+05:00" — +05:00 это время Тобольска).
+   Чтобы выключить акцию совсем — поставь PROMO = null.               */
+const PROMO = { id: "d5", price: 2000, until: "2026-09-10T23:59:59+05:00" };
+function promoActive(){ return !!PROMO && Date.now() < new Date(PROMO.until).getTime(); }
+function applyPromo(){
+  if(!PROMO) return;
+  const p = PRODUCTS.find(x=>x.id===PROMO.id);
+  if(!p) return;
+  if(promoActive()){
+    if(p.originalPrice===undefined) p.originalPrice = p.variants ? p.variants[0].p : p.price;
+    if(p.variants) p.variants[0].p = PROMO.price; else p.price = PROMO.price;
+    p.isPromo = true;
+  } else if(p.isPromo){
+    if(p.variants) p.variants[0].p = p.originalPrice; else p.price = p.originalPrice;
+    p.isPromo = false;
+  }
+}
+applyPromo();
+
 /* составы кормов — вставлять строго как прислала владелица, без изменений */
 const COMPOSITION = {
   d2: `🥩 Состав:
@@ -206,9 +228,32 @@ L-лизин, DL-метионин, фосфат кальция, оксид на�
 Влага: ≤ 10.0%
 Зола: ≤ 10.0%
 Соль (водорастворимые оксиды): ≥ 0.3%`,
-  c1: `Свежее куриное мясо (30%), куриная мука (20%), картофельная мука, горох, куриный жир, клюква (3%), гидролизат курицы, лососевый жир, клетчатка, говяжий жир, семена льна, гидролизат дрожжей, яблочный порошок, морковный порошок, тыква, черника, порошок юкки (0,1%).
-
-Добавки: фруктоолигосахарид (0,3%), натуральный лютеин (из бархатцев), таурин, хлорид натрия, хлорид калия, протеинаты меди/цинка/железа/марганца, йодат кальция, селен-дрожжи, витамины A, D3, E (dl-α-токоферола ацетат), B1, B2, B6, B12, D-пантотенат кальция, никотинамид, фолиевая кислота, D-биотин, хлорид холина, антиоксидант, L-лизин, DL-метионин, хондроитина сульфат (500 мг/кг), L-карнитин (400 мг/кг).`
+  c1: `🥩 Состав:
+Свежее куриное мясо (30%), куриная мука (20%)
+Картофельная мука, горох, куриный жир
+Клюква (3%), гидролизат курицы, лососевый жир
+Клетчатка, говяжий жир, семена льна
+Гидролизат дрожжей, яблочный порошок
+Морковный порошок, тыква, черника, порошок юкки (0,1%)
+✅ В составе:
+Фруктоолигосахарид (0,3%), натуральный лютеин (из бархатцев)
+Таурин, хлорид натрия, хлорид калия
+Протеинаты меди, цинка, железа и марганца
+Йодат кальция, селен-дрожжи
+Витамины A, D3, E (dl-альфа-токоферола ацетат), B1, B2, B6, B12
+D-пантотенат кальция, никотинамид, фолиевая кислота, D-биотин
+Хлорид холина, антиоксидант, L-лизин, DL-метионин
+Хондроитина сульфат (500 мг/кг), L-карнитин (400 мг/кг)
+🔬 Пищевая ценность:
+Белки: ≥ 30.0%
+Жиры: ≥ 14.0%
+Клетчатка: ≤ 5.0%
+Зола: ≤ 10.0%
+Влага: ≤ 10.0%
+Кальций: ≥ 0.9%
+Фосфор: ≥ 0.7%
+Таурин: ≥ 0.2%
+Соль (водорастворимые хлориды): ≥ 0.3%`
 };
 
 const money = n => n.toLocaleString('ru-RU') + '\u00A0₽';
@@ -265,9 +310,14 @@ function renderGrid(){
   list.forEach(p=>{
     const card=document.createElement('article'); card.className='card';
     const hasVar = !!p.variants;
-    const priceHTML = hasVar && p.variants.length>1
-      ? '<span class="tag"><span class="from">от</span>'+money(priceOf(p))+'</span>'
-      : '<span class="tag">'+money(priceOf(p))+'</span>';
+    const isPromo = p.isPromo && promoActive();
+    if(isPromo) card.classList.add('promo');
+    card.dataset.pid = p.id;
+    const priceHTML = isPromo
+      ? '<span class="oldprice">'+money(p.originalPrice)+'</span><span class="tag">'+money(priceOf(p))+'</span>'
+      : (hasVar && p.variants.length>1
+        ? '<span class="tag"><span class="from">от</span>'+money(priceOf(p))+'</span>'
+        : '<span class="tag">'+money(priceOf(p))+'</span>');
     let thumbsHTML='', patHTML='';
     if(p.gallery){
       thumbsHTML='<div class="thumbs">'+p.gallery.map((g,i)=>'<img data-g="'+g.k+'" data-n="'+g.n+'" title="'+g.n+'" class="'+(i===0?'on':'')+'" src="'+(IMAGES[g.k]||'')+'" alt="'+g.n+'" loading="lazy" decoding="async">').join('')+'</div>';
@@ -283,7 +333,7 @@ function renderGrid(){
         '<div class="comptext" hidden>'+comp.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'
       : '';
     card.innerHTML =
-      '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span><img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async"></div>'+
+      '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':'')+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async"></div>'+
       thumbsHTML+
       '<div class="cbody">'+
         '<div class="cname">'+p.name+'</div>'+
@@ -482,6 +532,43 @@ document.getElementById('q').addEventListener('input',e=>{ query=e.target.value;
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 renderGrid(); renderCart();
+
+/* ---- баннер "Акция недели" со счётчиком времени ---- */
+(function promoBanner(){
+  const bar=document.getElementById('promobar');
+  if(!bar || !PROMO) return;
+  const promoProd = PRODUCTS.find(x=>x.id===PROMO.id);
+  if(!promoProd) return;
+  const descEl=document.getElementById('pbDesc'), timerEl=document.getElementById('pbTimer'), btn=document.getElementById('pbBtn');
+  const pad=n=>String(n).padStart(2,'0');
+  let iv;
+  function tick(){
+    if(!promoActive()){
+      bar.hidden=true;
+      applyPromo();     // вернёт обычную цену товару
+      renderGrid();      // перерисует карточки уже без акции
+      if(iv) clearInterval(iv);
+      return;
+    }
+    bar.hidden=false;
+    descEl.innerHTML = promoProd.name+': <span class="old">'+money(promoProd.originalPrice)+'</span><b>'+money(PROMO.price)+'</b>';
+    const diff = new Date(PROMO.until).getTime() - Date.now();
+    const d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+    timerEl.innerHTML = '<span>'+d+' дн</span><span>'+pad(h)+':'+pad(m)+':'+pad(s)+'</span>';
+  }
+  btn.onclick=()=>{
+    selectCategory(promoProd.cat);
+    setTimeout(()=>{
+      const card=document.querySelector('.card[data-pid="'+promoProd.id+'"]');
+      if(card){
+        card.scrollIntoView({behavior:'smooth',block:'center'});
+        card.animate && card.animate([{boxShadow:'0 0 0 4px rgba(240,126,27,.55)'},{boxShadow:'0 0 0 0 rgba(240,126,27,0)'}],{duration:900});
+      }
+    },80);
+  };
+  tick();
+  iv=setInterval(tick,1000);
+})();
 
 /* ---- милый пёсик бегает туда-сюда по шапке сайта (покадровая анимация, 8 кадров) ---- */
 (function runDog(){
