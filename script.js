@@ -540,11 +540,23 @@ renderGrid(); renderCart();
   const promoProd = PRODUCTS.find(x=>x.id===PROMO.id);
   if(!promoProd) return;
   const descEl=document.getElementById('pbDesc'), timerEl=document.getElementById('pbTimer'), btn=document.getElementById('pbBtn');
+  const heroCard=document.getElementById('heroPromo'), heroCat=document.getElementById('heroPromoCat'), heroImg=document.getElementById('heroPromoImg');
   const pad=n=>String(n).padStart(2,'0');
   let iv;
+  function goToPromo(){
+    selectCategory(promoProd.cat);
+    setTimeout(()=>{
+      const card=document.querySelector('.card[data-pid="'+promoProd.id+'"]');
+      if(card){
+        card.scrollIntoView({behavior:'smooth',block:'center'});
+        card.animate && card.animate([{boxShadow:'0 0 0 4px rgba(240,126,27,.55)'},{boxShadow:'0 0 0 0 rgba(240,126,27,0)'}],{duration:900});
+      }
+    },80);
+  }
   function tick(){
     if(!promoActive()){
       bar.hidden=true;
+      if(heroCard) heroCard.hidden=true;
       applyPromo();     // вернёт обычную цену товару
       renderGrid();      // перерисует карточки уже без акции
       if(iv) clearInterval(iv);
@@ -555,17 +567,15 @@ renderGrid(); renderCart();
     const diff = new Date(PROMO.until).getTime() - Date.now();
     const d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
     timerEl.innerHTML = '<span>'+d+' дн</span><span>'+pad(h)+':'+pad(m)+':'+pad(s)+'</span>';
+    if(heroCard){
+      heroCard.hidden=false;
+      heroCat.textContent = CATLBL[promoProd.cat]||'';
+      heroImg.src = IMAGES[promoProd.img]||'';
+      heroImg.alt = promoProd.name;
+    }
   }
-  btn.onclick=()=>{
-    selectCategory(promoProd.cat);
-    setTimeout(()=>{
-      const card=document.querySelector('.card[data-pid="'+promoProd.id+'"]');
-      if(card){
-        card.scrollIntoView({behavior:'smooth',block:'center'});
-        card.animate && card.animate([{boxShadow:'0 0 0 4px rgba(240,126,27,.55)'},{boxShadow:'0 0 0 0 rgba(240,126,27,0)'}],{duration:900});
-      }
-    },80);
-  };
+  btn.onclick=goToPromo;
+  if(heroCard) heroCard.onclick=(e)=>{ e.preventDefault(); goToPromo(); };
   tick();
   iv=setInterval(tick,1000);
 })();
