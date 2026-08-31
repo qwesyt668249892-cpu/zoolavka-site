@@ -599,5 +599,3 @@ renderGrid(); renderCart();
      if(document.readyState==='complete') start();
           else addEventListener('load', start, {once:true});
 })();
-     else addEventListener('load', start, {once:true});
-})();
