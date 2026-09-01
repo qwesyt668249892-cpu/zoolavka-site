@@ -1,5 +1,5 @@
 :root{
-    --bg:#FBF1E0; --surface:#ffffff; --ink:#2A1F17; --ink-soft:#7C6C5C;
+    --bg:#F9F3EA; --surface:#ffffff; --ink:#2A1F17; --ink-soft:#7C6C5C;
     --brand:#F07E1B; --brand-d:#D8680B; --peach:#FCE8D2; --peach-2:#FDF2E4;
     --line:#EEE3D4; --ok:#3E8E63; --shadow:0 6px 22px rgba(70,44,16,.08);
     --radius:18px;
@@ -17,7 +17,7 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
 
 /* header */
-header{position:sticky;top:0;z-index:40;background:rgba(251,241,224,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:40;background:rgba(249,243,234,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .hrow{display:flex;align-items:center;gap:16px;padding:12px 0}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.02em;flex:0 0 auto}
 .logo .mark{width:40px;height:40px;border-radius:12px;background:var(--brand);display:grid;place-items:center;box-shadow:0 4px 12px rgba(240,126,27,.35)}
