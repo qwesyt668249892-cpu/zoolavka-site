@@ -67,7 +67,7 @@ header{position:sticky;top:0;z-index:40;background:rgba(251,241,224,.92);backdro
 .paws{position:absolute;inset:0;pointer-events:none;opacity:.5;z-index:-1}
 .hero .wrap{position:relative;z-index:2}
 .kibble{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.herovid{position:absolute;top:50%;right:30%;transform:translateY(-50%);width:min(19.3%,207px);aspect-ratio:3/4;object-fit:cover;background:transparent;border-radius:0;z-index:1;pointer-events:none;filter:none;-webkit-mask-image:radial-gradient(ellipse 68% 68% at 50% 46%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 68% 68% at 50% 46%,#000 55%,transparent 100%)}
+.herovid{position:absolute;top:50%;right:30%;transform:translateY(-50%);width:min(19.3%,207px);aspect-ratio:3/4;object-fit:cover;background:transparent;border-radius:0;z-index:1;pointer-events:none;filter:none}
 @media(max-width:900px){.herovid{position:absolute;left:50%;top:auto;right:auto;transform:translateX(-50%);width:min(39.1vw,230px);bottom:16px}}
 @media(max-width:640px){.herovid{left:50%;width:min(55.2vw,219px);bottom:14px}}
 .heropromo{position:absolute;top:50%;right:8%;transform:translateY(-50%);width:min(19%,190px);aspect-ratio:3/4;background:#fff;border:3px solid var(--brand);border-radius:18px;box-shadow:0 12px 30px rgba(70,44,16,.20);z-index:1;padding:14px;display:block}
