@@ -29,7 +29,7 @@ const CATIMAGES = {dog:"",cat:"",treat:"",vit:"",bed:"",pad:"",acc:""};
 
 const PRODUCTS = [
    {id:"d2", cat:"dog", name:"Корм Myfoodie - беззерновая говядина", desc:"Grain Free · двойное мясо · все породы", img:"food_beef_gf", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
-   {id:"d3", cat:"dog", name:"Корм Myfoodie - оленина", desc:"Двойное мясо · для взрослых собак", img:"food_venison", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:10500}]},
+   {id:"d3", cat:"dog", name:"Корм Myfoodie - оленина", desc:"Двойное мясо · для взрослых собак", img:"food_venison", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:11000}]},
    {id:"d4", cat:"dog", name:"Корм Myfoodie - говядина и овощи", desc:"Двойное мясо · говядина + овощи · все породы", img:"food_beef2", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d5", cat:"dog", name:"Корм Myfoodie для щенков - говядина и курица", desc:"Natural Food Puppy · все породы · 1,8 кг", img:"food_puppy", variants:[{l:"1,8 кг",p:2300}]},
    {id:"d6", cat:"dog", name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
