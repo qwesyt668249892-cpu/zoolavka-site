@@ -6,7 +6,7 @@ const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонт
 const TG_BOT_TOKEN = "8713647672:AAG7TLFs3OGaZc7gqZWQIsmFzac8axNUk18";
 const TG_CHAT_ID   = "958072190";
 
-const HERO_VIDEO = "images/herodog.webm";
+const HERO_VIDEO = "images/herodog.webm?v=2";
 const HERO_VIDEO_FALLBACK = "images/herodogfallback.mp4?v=3";
 
 const CATS = [
