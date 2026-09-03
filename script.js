@@ -491,7 +491,7 @@ async function sendOrder(){
             setTimeout(()=>{ modal.classList.remove('on'); hint.style.color=''; hint.textContent='Мы получим заявку и сами свяжемся с вами в выбранном мессенджере.'; btn.disabled=false; btn.innerHTML=oldLabel; },1600);
      }catch(e){
             btn.disabled=false; btn.innerHTML=oldLabel;
-            err.textContent='Не получилось отправить автоматически — нажмите «Скопировать заказ» и пришлите его нам в сообщения ВКонтакте (vk.com/zoolavka66).';
+            err.textContent='Не получилось отправить автоматически — нажмите «Скопировать заказ» и пришлите его нам в сообщения ВКонтакте (vk.ru/zoolavka72).';
             err.style.display='block';
      }
 }
