@@ -57,7 +57,7 @@ const PRODUCTS = [
    {id:"a2", cat:"acc", name:"Автопоилка", desc:"Миска + поилка 2-в-1", img:"acc_waterer", price:900},
    ];
 
-const PROMO = { id: "d5", price: 2000, until: "2026-09-10T23:59:59+05:00" };
+const PROMO = { id: "d5", price: 2000, until: "2026-09-30T23:59:59+05:00" };
 function promoActive(){ return !!PROMO && Date.now() < new Date(PROMO.until).getTime(); }
 function applyPromo(){
      if(!PROMO) return;
