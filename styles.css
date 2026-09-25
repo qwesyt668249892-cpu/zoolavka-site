@@ -234,3 +234,10 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
 .faq summary{cursor:pointer;font-weight:600;color:var(--ink)}
 .faq summary::marker{color:var(--brand)}
 .faq p{margin:10px 0 0;color:var(--ink-soft)}
+
+/* sold out */
+.card.soldout .ph img{filter:grayscale(1);opacity:.45}
+.card.soldout .ph{position:relative;overflow:hidden}
+.soldflag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);background:#C0392B;color:#fff;font-weight:800;font-size:clamp(14px,5vw,22px);line-height:1.15;text-align:center;letter-spacing:.03em;text-transform:uppercase;padding:8px 14px;border-radius:12px;white-space:normal;width:max-content;max-width:88%;box-shadow:0 6px 18px rgba(0,0,0,.18);z-index:2}
+.card.soldout .pricerow{opacity:.45}
+.card.soldout .addbtn{flex:1 1 100%;font-weight:800;text-transform:uppercase}

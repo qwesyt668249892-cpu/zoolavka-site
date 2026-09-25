@@ -34,7 +34,7 @@ const PRODUCTS = [
    {id:"d5", cat:"dog", name:"Корм Myfoodie для щенков - говядина и курица", desc:"Natural Food Puppy · все породы · 1,8 кг", img:"food_puppy", variants:[{l:"1,8 кг",p:2300}]},
    {id:"d6", cat:"dog", name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
    {id:"d7", cat:"dog", name:"Корм Myfoodie - курица", desc:"Двойное мясо · все породы", img:"food_chicken", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:10000}]},
-   {id:"d9", cat:"dog", name:"Корм Myfoodie - утка и лосось", desc:"Adult · для взрослых собак всех пород", img:"food_ducksalmon", variants:[{l:"700 г",p:900},{l:"7 кг",p:8500}]},
+   {id:"d9", cat:"dog", name:"Корм Myfoodie - утка и лосось", desc:"Adult · для взрослых собак всех пород", img:"food_ducksalmon", soldout:true, variants:[{l:"700 г",p:900},{l:"7 кг",p:8500}]},
    {id:"c1", cat:"cat", name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
    {id:"t1", cat:"treat", name:"Мясные палочки - говядина и треска", desc:"Global Natural · 360 г", img:"treat_stick_beef", price:700},
    {id:"t2", cat:"treat", name:"Мясные палочки - курица", desc:"Global Natural · 360 г", img:"treat_stick_chick", price:700},
@@ -57,7 +57,7 @@ const PRODUCTS = [
    {id:"a2", cat:"acc", name:"Автопоилка", desc:"Миска + поилка 2-в-1", img:"acc_waterer", price:900},
    ];
 
-const PROMO = { id: "d5", price: 2000, until: "2026-09-30T23:59:59+05:00" };
+const PROMO = { id: "d5", price: 1800, until: "2026-10-31T23:59:59+05:00" };
 function promoActive(){ return !!PROMO && Date.now() < new Date(PROMO.until).getTime(); }
 function applyPromo(){
      if(!PROMO) return;
@@ -286,6 +286,7 @@ function renderGrid(){
             const hasVar = !!p.variants;
             const isPromo = p.isPromo && promoActive();
             if(isPromo) card.classList.add('promo');
+            if(p.soldout) card.classList.add('soldout');
             card.dataset.pid = p.id;
             const priceHTML = isPromo
               ? '<span class="oldprice">'+money(p.originalPrice)+'</span><span class="tag">'+money(priceOf(p))+'</span>'
@@ -298,7 +299,7 @@ function renderGrid(){
                      patHTML='<div class="patname">Расцветка: <b class="patsel">'+p.gallery[0].n+'</b></div>';
             }
             let selHTML='';
-            if(hasVar && p.variants.length>1){
+            if(hasVar && p.variants.length>1 && !p.soldout){
                      selHTML='<select class="varsel" aria-label="Размер / фасовка">'+p.variants.map((v,i)=>'<option value="'+i+'">'+v.l+(v.oos?' - нет в наличии':' - '+money(v.p))+'</option>').join('')+'</select>';
             }
             const comp = COMPOSITION[p.id];
@@ -307,7 +308,7 @@ function renderGrid(){
                        '<div class="comptext" hidden>'+comp.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'
                      : '';
             card.innerHTML =
-                     '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':'')+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async"></div>'+
+                     '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':'')+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'</div>'+
                      thumbsHTML+
                      '<div class="cbody">'+
                        '<div class="cname">'+p.name+'</div>'+
@@ -352,13 +353,14 @@ function renderGrid(){
                      if(qrow) qrow.style.visibility = oos ? 'hidden' : '';
             }
             if(sel){ sel.onchange=refreshVar; }
+            if(p.soldout){ addb.disabled=true; addb.classList.add('oos'); addb.textContent='Нет в наличии'; if(qrow) qrow.style.display='none'; }
             let qv=1;
             const qval=card.querySelector('.qval');
             card.querySelector('.qminus').onclick=()=>{ qv=Math.max(1,qv-1); qval.textContent=qv; };
             card.querySelector('.qplus').onclick=()=>{ qv=Math.min(99,qv+1); qval.textContent=qv; };
             addb.onclick=()=>{
                      const vi = sel ? +sel.value : 0;
-                     if(p.variants && p.variants[vi] && p.variants[vi].oos) return;
+                     if(p.soldout || (p.variants && p.variants[vi] && p.variants[vi].oos)) return;
                      addToCart(p, vi, qv, patName, patKey);
                      qv=1; qval.textContent=qv;
                      addb.classList.add('added'); addb.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Добавлено';
