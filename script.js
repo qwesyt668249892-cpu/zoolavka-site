@@ -28,6 +28,7 @@ const GROUPS = [
 const CATIMAGES = {dog:"",cat:"",treat:"",vit:"",bed:"",pad:"",acc:""};
 
 const PRODUCTS = [
+   {id:"d10", cat:"dog", isNew:true, name:"Корм Myfoodie для мелких пород - говядина с черникой", desc:"Гранулы + мясные кубики · пробиотики · мелкие породы", img:"food_small", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d2", cat:"dog", name:"Корм Myfoodie - беззерновая говядина", desc:"Grain Free · двойное мясо · все породы", img:"food_beef_gf", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d3", cat:"dog", name:"Корм Myfoodie - оленина", desc:"Двойное мясо · для взрослых собак", img:"food_venison", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d4", cat:"dog", name:"Корм Myfoodie - говядина и овощи", desc:"Двойное мясо · говядина + овощи · все породы", img:"food_beef2", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
@@ -35,9 +36,8 @@ const PRODUCTS = [
    {id:"d6", cat:"dog", name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
    {id:"d7", cat:"dog", name:"Корм Myfoodie - курица", desc:"Двойное мясо · все породы", img:"food_chicken", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:10000}]},
    {id:"d9", cat:"dog", name:"Корм Myfoodie - утка и лосось", desc:"Adult · для взрослых собак всех пород", img:"food_ducksalmon", soldout:true, variants:[{l:"700 г",p:900},{l:"7 кг",p:8500}]},
-   {id:"d10", cat:"dog", name:"Корм Myfoodie для мелких пород - говядина с черникой", desc:"Гранулы + мясные кубики · пробиотики · мелкие породы", img:"food_small", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
+   {id:"c2", cat:"cat", isNew:true, name:"Корм Myfoodie для кошек - курица и тунец", desc:"Свежее мясо · для взрослых кошек · таурин", img:"cat_tuna", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"c1", cat:"cat", name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
-   {id:"c2", cat:"cat", name:"Корм Myfoodie для кошек - курица и тунец", desc:"Свежее мясо · для взрослых кошек · таурин", img:"cat_tuna", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"t1", cat:"treat", name:"Мясные палочки - говядина и треска", desc:"Global Natural · 360 г", img:"treat_stick_beef", price:700},
    {id:"t2", cat:"treat", name:"Мясные палочки - курица", desc:"Global Natural · 360 г", img:"treat_stick_chick", price:700},
    {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_beef", price:500},
@@ -353,7 +353,7 @@ function renderGrid(){
                        '<div class="comptext" hidden>'+comp.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'
                      : '';
             card.innerHTML =
-                     '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':'')+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'</div>'+
+                     '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':(p.isNew?'<span class="promoflag">✨ Новинка</span>':''))+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'</div>'+
                      thumbsHTML+
                      '<div class="cbody">'+
                        '<div class="cname">'+p.name+'</div>'+
