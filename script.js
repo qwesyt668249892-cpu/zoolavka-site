@@ -1,4 +1,4 @@
-const IMAGES = {"food_beef_gf": "images/food_beef_gf.webp", "food_venison": "images/food_venison.webp", "food_beef2": "images/food_beef2.webp", "food_puppy": "images/food_puppy.webp", "food_probio": "images/food_probio.webp", "food_chicken": "images/food_chicken.webp", "food_ducksalmon": "images/food_ducksalmon.webp", "food_small": "images/food_small.webp", "cat_chicken": "images/cat_chicken.webp", "treat_stick_beef": "images/treat_stick_beef.webp", "treat_stick_chick": "images/treat_stick_chick.webp", "treat_cube_beef": "images/treat_cube_beef.webp", "treat_cube_duck": "images/treat_cube_duck.webp", "vit_multi": "images/vit_multi.webp", "vit_calcium": "images/vit_calcium.webp", "bed_black": "images/bed_black.webp", "bed_cream": "images/bed_cream.webp", "bed_yellow": "images/bed_yellow.webp", "bed_green": "images/bed_green.webp", "bed_pink": "images/bed_pink.webp", "bed_grey": "images/bed_grey.webp", "bed_beige": "images/bed_beige.webp", "acc_carrier": "images/acc_carrier.webp", "acc_waterer": "images/acc_waterer.webp", "pel_a": "images/pel_a.webp", "pel_b": "images/pel_b.webp", "pel_c": "images/pel_c.webp", "pel_d": "images/pel_d.webp", "pel_e": "images/pel_e.webp", "treat_cube_beef2": "images/treat_cube_beef2.webp", "logo": "images/logo.webp", "cat_dog": "images/cat_dog.webp", "cat_cat": "images/cat_cat.webp", "cat_treat": "images/cat_treat.webp", "cat_vit": "images/cat_vit.webp", "cat_bed": "images/cat_bed.webp", "cat_pad": "images/cat_pad.webp", "cat_acc": "images/cat_acc.webp"};
+const IMAGES = {"food_beef_gf": "images/food_beef_gf.webp", "food_venison": "images/food_venison.webp", "food_beef2": "images/food_beef2.webp", "food_puppy": "images/food_puppy.webp", "food_probio": "images/food_probio.webp", "food_chicken": "images/food_chicken.webp", "food_ducksalmon": "images/food_ducksalmon.webp", "food_small": "images/food_small.webp", "cat_tuna": "images/cat_tuna.webp", "cat_chicken": "images/cat_chicken.webp", "treat_stick_beef": "images/treat_stick_beef.webp", "treat_stick_chick": "images/treat_stick_chick.webp", "treat_cube_beef": "images/treat_cube_beef.webp", "treat_cube_duck": "images/treat_cube_duck.webp", "vit_multi": "images/vit_multi.webp", "vit_calcium": "images/vit_calcium.webp", "bed_black": "images/bed_black.webp", "bed_cream": "images/bed_cream.webp", "bed_yellow": "images/bed_yellow.webp", "bed_green": "images/bed_green.webp", "bed_pink": "images/bed_pink.webp", "bed_grey": "images/bed_grey.webp", "bed_beige": "images/bed_beige.webp", "acc_carrier": "images/acc_carrier.webp", "acc_waterer": "images/acc_waterer.webp", "pel_a": "images/pel_a.webp", "pel_b": "images/pel_b.webp", "pel_c": "images/pel_c.webp", "pel_d": "images/pel_d.webp", "pel_e": "images/pel_e.webp", "treat_cube_beef2": "images/treat_cube_beef2.webp", "logo": "images/logo.webp", "cat_dog": "images/cat_dog.webp", "cat_cat": "images/cat_cat.webp", "cat_treat": "images/cat_treat.webp", "cat_vit": "images/cat_vit.webp", "cat_bed": "images/cat_bed.webp", "cat_pad": "images/cat_pad.webp", "cat_acc": "images/cat_acc.webp"};
 const PHONE_WA = "79324825181"; // WhatsApp / телефон
 const TG = "https://t.me/qwesyt66"; // личный чат для заказов
 const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонтакте
@@ -35,8 +35,9 @@ const PRODUCTS = [
    {id:"d6", cat:"dog", name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
    {id:"d7", cat:"dog", name:"Корм Myfoodie - курица", desc:"Двойное мясо · все породы", img:"food_chicken", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:10000}]},
    {id:"d9", cat:"dog", name:"Корм Myfoodie - утка и лосось", desc:"Adult · для взрослых собак всех пород", img:"food_ducksalmon", soldout:true, variants:[{l:"700 г",p:900},{l:"7 кг",p:8500}]},
-   {id:"d10", cat:"dog", name:"Корм Myfoodie для мелких пород - говядина", desc:"Гранулы + мясные кубики · пробиотики · мелкие породы", img:"food_small", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
+   {id:"d10", cat:"dog", name:"Корм Myfoodie для мелких пород - говядина с черникой", desc:"Гранулы + мясные кубики · пробиотики · мелкие породы", img:"food_small", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"c1", cat:"cat", name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
+   {id:"c2", cat:"cat", name:"Корм Myfoodie для кошек - курица и тунец", desc:"Свежее мясо · для взрослых кошек · таурин", img:"cat_tuna", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"t1", cat:"treat", name:"Мясные палочки - говядина и треска", desc:"Global Natural · 360 г", img:"treat_stick_beef", price:700},
    {id:"t2", cat:"treat", name:"Мясные палочки - курица", desc:"Global Natural · 360 г", img:"treat_stick_chick", price:700},
    {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_beef", price:500},
@@ -248,7 +249,32 @@ const COMPOSITION = {
      Кальций: ≥ 0.9%
      Фосфор: ≥ 0.7%
      Таурин: ≥ 0.2%
-     Соль (водорастворимые хлориды): ≥ 0.3%`
+     Соль (водорастворимые хлориды): ≥ 0.3%`,
+     c2: `🥩 Состав:
+     Свежая курица (30%), куриная мука, рис
+     Пшеница, куриный жир, тунец (5%)
+     Пшеничный глютен, клюква (3%), лососевый жир (2%)
+     Говяжий жир, семена льна, гороховая клетчатка (1%), целлюлоза (1%)
+     Комплексная вкусовая добавка, пивные дрожжи, яблочный порошок
+     Морковный порошок, тыква, черника, семена подорожника, порошок юкки
+     ✅ В составе:
+     Ксилоолигосахариды, натуральный лютеин
+     Таурин, хлорид натрия, хлорид калия
+     Хелаты марганца, цинка и меди, сульфат железа
+     Йодат кальция, селен-дрожжи
+     Витамины A, D3, E (dl-альфа-токоферола ацетат), B1, B2, B6, B12
+     D-пантотенат кальция, никотинамид, фолиевая кислота, D-биотин
+     Хлорид холина, антиоксидант, L-лизин, DL-метионин
+     🔬 Пищевая ценность:
+     Белки: ≥ 30.0%
+     Жиры: ≥ 14.0%
+     Клетчатка: ≤ 5.0%
+     Зола: ≤ 10.0%
+     Влага: ≤ 10.0%
+     Кальций: ≥ 0.9%
+     Фосфор: ≥ 0.7%
+     Таурин: ≥ 0.2%
+     Соль (Cl): ≥ 0.3%`
 };
 
 const money = n => n.toLocaleString('ru-RU') + ' ₽';
