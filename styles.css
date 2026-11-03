@@ -241,3 +241,45 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
 .soldflag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);background:#C0392B;color:#fff;font-weight:800;font-size:clamp(14px,5vw,22px);line-height:1.15;text-align:center;letter-spacing:.03em;text-transform:uppercase;padding:8px 14px;border-radius:12px;white-space:normal;width:max-content;max-width:88%;box-shadow:0 6px 18px rgba(0,0,0,.18);z-index:2}
 .card.soldout .pricerow{opacity:.45}
 .card.soldout .addbtn{flex:1 1 100%;font-weight:800;text-transform:uppercase}
+
+/* ---------- карточка товара ---------- */
+.card .ph{cursor:zoom-in}
+.card .cname{cursor:pointer}
+.card .cname:hover{color:var(--brand-d)}
+.morebtn{align-self:flex-start;background:none;border:none;padding:0;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--brand-d);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.pmodal{background:rgba(40,26,14,.45)}
+.psheet{position:relative;background:var(--bg);width:min(920px,100%);max-height:94vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px 24px}
+.pclose{position:sticky;top:0;float:right;z-index:3;background:var(--surface);border-radius:50%;box-shadow:var(--shadow)}
+.pbody{display:grid;gap:18px}
+.pgal{display:flex;flex-direction:column;gap:10px}
+.pmain{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:zoom-in;aspect-ratio:1/1;display:grid;place-items:center}
+.pmain img{width:100%;height:100%;object-fit:contain}
+.pzoomhint{position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;color:var(--ink);box-shadow:var(--shadow)}
+.pthumbs{display:flex;gap:8px;flex-wrap:wrap}
+.pthumbs img{width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid var(--line);cursor:pointer;opacity:.75}
+.pthumbs img.on,.pthumbs img:hover{opacity:1;border-color:var(--brand)}
+.pinfo{display:flex;flex-direction:column;gap:10px;min-width:0}
+.pinfo .ctag.pc{position:static;align-self:flex-start}
+.pinfo h2{margin:0;font-size:22px;line-height:1.25}
+.pinfo .cdesc{font-size:14px;margin:0}
+.pinfo .varsel{margin-top:4px}
+.pinfo .buyrow{display:flex;gap:10px;align-items:center}
+.pinfo .addbtn{flex:1;justify-content:center;height:46px;font-size:15px}
+.pinfo section{border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.pinfo h3{margin:0 0 6px;font-size:16px}
+.pinfo section p{margin:0 0 8px;font-size:14.5px;line-height:1.55}
+.pfeat{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.pfeat li{position:relative;padding-left:24px;font-size:14.5px;line-height:1.45}
+.pfeat li::before{content:"";position:absolute;left:4px;top:5px;width:10px;height:6px;border-left:2.5px solid var(--ok);border-bottom:2.5px solid var(--ok);transform:rotate(-45deg)}
+.pfacts{margin:0;display:grid;gap:4px}
+.pfacts div{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.pfacts dt{color:var(--ink-soft)} .pfacts dd{margin:0;font-weight:600;text-align:right}
+.pinfo .comptext{font-size:13px}
+.pzoom{position:fixed;inset:0;z-index:90;background:rgba(20,14,8,.92);display:none;align-items:center;justify-content:center;cursor:zoom-out;padding:16px}
+.pzoom.on{display:flex}
+.pzoom img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff}
+@media(min-width:760px){
+  .psheet{border-radius:20px;padding:24px}
+  .pbody{grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .pgal{position:sticky;top:0}
+}

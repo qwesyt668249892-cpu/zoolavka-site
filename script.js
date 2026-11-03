@@ -6,6 +6,10 @@ const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонт
 const TG_BOT_TOKEN = "8713647672:AAG7TLFs3OGaZc7gqZWQIsmFzac8axNUk18";
 const TG_CHAT_ID   = "958072190";
 
+// ВК-бот заказов (работает в РФ без VPN)
+const VK_TOKEN   = window.ZL_VK_TOKEN || ""; // ключ лежит в config.js
+const VK_PEER_ID = "142119791"; // ID страницы ВК, куда приходят заказы
+
 const HERO_VIDEO = "images/herodog.webm?v=2";
 const HERO_VIDEO_FALLBACK = "images/herodogfallback.mp4?v=3";
 
@@ -78,6 +82,24 @@ function applyPromo(){
 }
 applyPromo();
 
+
+// Подробные карточки товаров. Добавляй сюда товары по id из PRODUCTS.
+// about - описание (абзацы через пустую строку), features - список плюсов, usage - как применять, facts - характеристики
+const DETAILS = {
+     v2: {
+            about:`Жевательные таблетки с молочным кальцием для собак всех пород. Кальций нужен для крепких костей, зубов и суставов, особенно щенкам в период активного роста, беременным и кормящим собакам, а также пожилым питомцам.
+
+Молочный кальций - органическая форма, которая легко усваивается и мягко действует на пищеварение. Таблетки собаки едят как лакомство, поэтому их удобно давать каждый день.`,
+            features:[
+                   "Молочный кальций - органическая, легкоусвояемая форма",
+                   "Поддерживает крепкие кости, зубы и суставы",
+                   "Подходит щенкам, взрослым и пожилым собакам",
+                   "Жевательные таблетки со вкусом, который нравится собакам"
+            ],
+            usage:`Давайте как лакомство, целиком или раскрошив в корм. Дозировка зависит от веса собаки и указана на упаковке. Перед курсом для щенков, беременных собак и собак с хроническими заболеваниями лучше проконсультироваться с ветеринаром.`,
+            facts:[["Бренд","Myfoodie"],["Форма","жевательные таблетки"],["Для кого","собаки всех пород"]]
+     }
+};
 const COMPOSITION = {
      d2: `🥩 Состав:
      Говядина (30%), свежая курица, куриный белок
@@ -284,13 +306,17 @@ const priceOf = p => p.variants ? Math.min(...p.variants.map(v=>v.p)) : p.price;
 
 let activeCat = "", query = "";
 const cart = {};
+try{ const saved=JSON.parse(localStorage.getItem('zl_cart')||'{}'); if(saved && typeof saved==='object') Object.assign(cart,saved); }catch(e){}
+function saveCart(){ try{ localStorage.setItem('zl_cart',JSON.stringify(cart)); }catch(e){} }
 
 function selectCategory(id){
      activeCat=id; query=''; const qi=document.getElementById('q'); if(qi) qi.value='';
+     if(location.hash!=='#'+id) history.pushState(null,'','#'+id);
      renderGrid(); grid.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function goHome(){
      activeCat=''; query=''; const qi=document.getElementById('q'); if(qi) qi.value='';
+     if(location.hash) history.pushState(null,'',location.pathname+location.search);
      renderGrid(); window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -358,8 +384,9 @@ function renderGrid(){
                      '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':(p.isNew?'<span class="promoflag">✨ Новинка</span>':''))+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'</div>'+
                      thumbsHTML+
                      '<div class="cbody">'+
-                       '<div class="cname">'+p.name+'</div>'+
+                       '<div class="cname" role="button" tabindex="0">'+p.name+'</div>'+
                        '<div class="cdesc">'+p.desc+'</div>'+
+                       '<button type="button" class="morebtn">Подробнее</button>'+
                        patHTML+
                        selHTML+
                        compHTML+
@@ -377,6 +404,10 @@ function renderGrid(){
                                 else{ ctext.setAttribute('hidden',''); cbtn.classList.remove('on'); cbtn.setAttribute('aria-expanded','false'); }
                      };
             }
+            const openThis=()=>openProduct(p, patKey);
+            card.querySelector('.ph').onclick=e=>{ if(!e.target.closest('.thumbs')) openThis(); };
+            const cn=card.querySelector('.cname'); cn.onclick=openThis; cn.onkeydown=e=>{ if(e.key==='Enter') openThis(); };
+            card.querySelector('.morebtn').onclick=openThis;
             let patName = p.gallery ? p.gallery[0].n : "";
             let patKey  = p.gallery ? p.gallery[0].k : "";
             if(p.gallery){
@@ -442,6 +473,7 @@ const ditems=document.getElementById('ditems'), badge=document.getElementById('b
          totalEl=document.getElementById('total'), toCheckout=document.getElementById('toCheckout');
 const mobiCart=document.getElementById('mobiCart'), mobiCartCount=document.getElementById('mobiCartCount');
 function renderCart(){
+     saveCart();
      const items=Object.entries(cart);
      const n = cartCount();
      badge.textContent = n || '';
@@ -512,6 +544,25 @@ function orderText(){
      return t;
 }
 const val=id=>document.getElementById(id).value.trim();
+
+// Отправка в ВК через JSONP: api.vk.com доступен в РФ без VPN
+function sendVK(text){
+     return new Promise((resolve,reject)=>{
+            const cb='vkcb_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+            if(!VK_TOKEN) return reject(new Error('no token'));
+            const sc=document.createElement('script');
+            const done=(ok,why)=>{ clearTimeout(timer); delete window[cb]; sc.remove(); ok?resolve():reject(new Error(why)); };
+            const timer=setTimeout(()=>done(false,'timeout'),12000);
+            window[cb]=r=>{ (r && r.response) ? done(true) : done(false,'vk error '+JSON.stringify(r&&r.error)); };
+            sc.onerror=()=>done(false,'network');
+            sc.src='https://api.vk.com/method/messages.send?peer_id='+VK_PEER_ID+'&random_id='+Math.floor(Math.random()*2e9)
+                  +'&message='+encodeURIComponent(text)+'&access_token='+VK_TOKEN+'&v=5.199&callback='+cb;
+            document.head.appendChild(sc);
+     });
+}
+function sendTG(text){
+     try{ fetch('https://api.telegram.org/bot'+TG_BOT_TOKEN+'/sendMessage?chat_id='+TG_CHAT_ID+'&text='+encodeURIComponent(text)).catch(()=>{}); }catch(e){}
+}
 async function sendOrder(){
      const btn=document.getElementById('sendOrder'), err=document.getElementById('sendErr'), hint=document.getElementById('chint'), consent=document.getElementById('cconsent'), consentLbl=consent.closest('.consent');
      if(!val('cname') || !val('cphone')){
@@ -529,10 +580,9 @@ async function sendOrder(){
      err.style.display='none';
      btn.disabled=true; const oldLabel=btn.innerHTML; btn.innerHTML='Отправляем…';
      try{
-            const url='https://api.telegram.org/bot'+TG_BOT_TOKEN+'/sendMessage?chat_id='+TG_CHAT_ID+'&text='+encodeURIComponent(orderText());
-            const resp=await fetch(url);
-            const data=await resp.json().catch(()=>null);
-            if(!resp.ok || !data || data.ok!==true) throw new Error('bad response');
+            const text=orderText();
+            sendTG(text); // копия в Telegram, если у клиента открывается (не обязательно)
+            await sendVK(text);
             Object.keys(cart).forEach(k=>delete cart[k]);
             renderCart();
             hint.style.color='var(--ok)';
@@ -551,10 +601,94 @@ function copy(text){ try{ navigator.clipboard.writeText(text); }catch(e){ const 
 function toast(msg){ const h=document.getElementById('chint'); h.textContent=msg; h.style.color='var(--ok)'; setTimeout(()=>{h.style.color='';h.textContent='Мы получим заявку и сами свяжемся с вами в выбранном мессенджере.';},3200); }
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ modal.classList.remove('on'); closeCart(); } });
-document.getElementById('q').addEventListener('input',e=>{ query=e.target.value; if(query.trim()){ activeCat=''; } renderGrid(); });
+document.getElementById('q').addEventListener('input',e=>{ query=e.target.value; if(query.trim()){ activeCat=''; if(location.hash) history.replaceState(null,'',location.pathname+location.search); } renderGrid(); });
 document.getElementById('yr').textContent=new Date().getFullYear();
 
+(function catFromHash(){ const id=location.hash.slice(1); if(CATS.some(c=>c.id===id)) activeCat=id; else { const p=PRODUCTS.find(x=>x.id===id); if(p) activeCat=p.cat; } })();
 renderGrid(); renderCart();
+
+// ---------- Карточка товара (модальное окно) ----------
+const pmodal=document.getElementById('pmodal');
+const zoom=document.getElementById('pzoom');
+function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function openProduct(p, startKey){
+     const d=DETAILS[p.id]||{};
+     const comp=COMPOSITION[p.id];
+     const isPromo=p.isPromo && promoActive();
+     const hasVar=!!p.variants;
+     let key = startKey || (p.gallery ? p.gallery[0].k : p.img);
+     let patName = p.gallery ? (p.gallery.find(g=>g.k===key)||p.gallery[0]).n : "";
+     let thumbs='';
+     if(p.gallery){ thumbs='<div class="pthumbs">'+p.gallery.map(g=>'<img data-g="'+g.k+'" data-n="'+esc(g.n)+'" class="'+(g.k===key?'on':'')+'" src="'+IMAGES[g.k]+'" alt="'+esc(g.n)+'">').join('')+'</div>'; }
+     let sel='';
+     if(hasVar && p.variants.length>1 && !p.soldout){
+            sel='<select class="varsel pvar" aria-label="Размер / фасовка">'+p.variants.map((v,i)=>'<option value="'+i+'">'+v.l+(v.oos?' - нет в наличии':' - '+money(v.p))+'</option>').join('')+'</select>';
+     }
+     const priceHTML = isPromo ? '<span class="oldprice">'+money(p.originalPrice)+'</span><span class="tag">'+money(priceOf(p))+'</span>' : '<span class="tag">'+money(hasVar?p.variants[0].p:priceOf(p))+'</span>';
+     const paras = d.about ? d.about.split(/\n\s*\n/).map(x=>'<p>'+esc(x.trim())+'</p>').join('') : '';
+     const sections =
+            (paras ? '<section><h3>Описание</h3>'+paras+'</section>' : '')+
+            (d.features ? '<section><h3>Преимущества</h3><ul class="pfeat">'+d.features.map(f=>'<li>'+esc(f)+'</li>').join('')+'</ul></section>' : '')+
+            (d.usage ? '<section><h3>Как давать</h3><p>'+esc(d.usage)+'</p></section>' : '')+
+            (d.facts ? '<section><h3>Характеристики</h3><dl class="pfacts">'+d.facts.map(f=>'<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>').join('')+'</dl></section>' : '')+
+            (comp ? '<section><h3>Состав</h3><div class="comptext">'+esc(comp)+'</div></section>' : '');
+     pmodal.querySelector('.pbody').innerHTML =
+            '<div class="pgal"><div class="pmain" title="Нажмите, чтобы увеличить"><img src="'+IMAGES[key]+'" alt="'+esc(p.name)+'">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'<span class="pzoomhint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg></span></div>'+thumbs+'</div>'+
+            '<div class="pinfo">'+
+                   '<span class="ctag pc">'+CATLBL[p.cat]+'</span>'+
+                   '<h2>'+esc(p.name)+'</h2>'+
+                   '<div class="cdesc">'+esc(p.desc)+'</div>'+
+                   (p.gallery?'<div class="patname">Расцветка: <b class="patsel">'+esc(patName)+'</b></div>':'')+
+                   sel+
+                   '<div class="pricerow">'+priceHTML+'</div>'+
+                   '<div class="buyrow"><div class="qty"><button type="button" class="qminus" aria-label="Меньше">−</button><span class="qval">1</span><button type="button" class="qplus" aria-label="Больше">+</button></div><button class="addbtn">В корзину</button></div>'+
+                   sections+
+            '</div>';
+     const b=pmodal.querySelector('.pbody');
+     const main=b.querySelector('.pmain img'), tag=b.querySelector('.tag'), addb=b.querySelector('.addbtn'), selEl=b.querySelector('.pvar');
+     b.querySelector('.pmain').onclick=()=>{ zoom.querySelector('img').src=main.src; zoom.classList.add('on'); };
+     b.querySelectorAll('.pthumbs img').forEach(t=>t.onclick=()=>{ key=t.dataset.g; patName=t.dataset.n; main.src=IMAGES[key]; const ps=b.querySelector('.patsel'); if(ps) ps.textContent=patName; b.querySelectorAll('.pthumbs img').forEach(x=>x.classList.toggle('on',x===t)); });
+     let qv=1; const qval=b.querySelector('.qval');
+     b.querySelector('.qminus').onclick=()=>{ qv=Math.max(1,qv-1); qval.textContent=qv; };
+     b.querySelector('.qplus').onclick=()=>{ qv=Math.min(99,qv+1); qval.textContent=qv; };
+     function refresh(){
+            const v = hasVar ? p.variants[selEl?+selEl.value:0] : null;
+            if(v && !isPromo) tag.innerHTML=money(v.p);
+            const oos = p.soldout || (v && v.oos);
+            addb.disabled=!!oos; addb.classList.toggle('oos',!!oos); addb.textContent = oos ? 'Нет в наличии' : 'В корзину';
+            b.querySelector('.qty').style.visibility = oos ? 'hidden' : '';
+     }
+     if(selEl) selEl.onchange=refresh;
+     refresh();
+     addb.onclick=()=>{
+            const vi=selEl?+selEl.value:0;
+            if(addb.disabled) return;
+            addToCart(p, vi, qv, patName, p.gallery?key:"");
+            qv=1; qval.textContent=qv;
+            addb.classList.add('added'); addb.textContent='Добавлено ✓';
+            setTimeout(()=>{ addb.classList.remove('added'); addb.textContent='В корзину'; },1100);
+     };
+     pmodal.classList.add('on'); pmodal.querySelector('.psheet').scrollTop=0;
+     document.body.style.overflow='hidden';
+     if(location.hash!=='#'+p.id) history.replaceState(null,'','#'+p.id);
+}
+function closeProduct(){
+     pmodal.classList.remove('on'); zoom.classList.remove('on'); document.body.style.overflow='';
+     history.replaceState(null,'',activeCat ? '#'+activeCat : location.pathname+location.search);
+}
+document.getElementById('closeProduct').onclick=closeProduct;
+pmodal.onclick=e=>{ if(e.target===pmodal) closeProduct(); };
+zoom.onclick=()=>zoom.classList.remove('on');
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(zoom.classList.contains('on')) zoom.classList.remove('on'); else if(pmodal.classList.contains('on')) closeProduct(); } });
+window.addEventListener('popstate',()=>{
+     const id=location.hash.slice(1);
+     const p=PRODUCTS.find(x=>x.id===id);
+     if(p){ openProduct(p); return; }
+     if(pmodal.classList.contains('on')){ pmodal.classList.remove('on'); zoom.classList.remove('on'); document.body.style.overflow=''; }
+     activeCat = CATS.some(c=>c.id===id) ? id : '';
+     renderGrid();
+});
+(function openFromHash(){ const id=location.hash.slice(1); const p=PRODUCTS.find(x=>x.id===id); if(p) openProduct(p); })();
 
 (function promoBanner(){
      const bar=document.getElementById('promobar');
