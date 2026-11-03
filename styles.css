@@ -294,3 +294,16 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
   .pmain{aspect-ratio:4/5}
 }
 .heropromo[hidden],.promobar[hidden]{display:none!important}
+/* hero: текст вместо кнопок, видео ближе к центру справа */
+.trust{gap:10px 26px;max-width:640px}
+.tp{background:none;border:0;box-shadow:none;border-radius:0;padding:0;font-weight:600;font-size:15px;color:var(--ink-soft)}
+.tp .ic{width:30px;height:30px;border-radius:50%;background:var(--peach);flex:0 0 auto}
+@media(min-width:901px){
+  .hero{padding:52px 0 48px}
+  .herovid{right:calc(max(18px,(100% - 1180px)/2) + 4%);width:min(22%,250px)}
+  .cats-hero{display:grid;grid-template-columns:1fr 1fr;gap:28px 24px}
+  .catgroup:last-child{grid-column:1/-1}
+  .tilegrid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .tile{min-height:150px}
+}
+@media(max-width:640px){.hero{padding-bottom:300px}.trust{gap:10px}}

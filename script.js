@@ -37,18 +37,18 @@ const PRODUCTS = [
    {id:"d3", cat:"dog", name:"Корм Myfoodie - оленина", desc:"Двойное мясо · для взрослых собак", img:"food_venison", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d4", cat:"dog", name:"Корм Myfoodie - говядина и овощи", desc:"Двойное мясо · говядина + овощи · все породы", img:"food_beef2", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
    {id:"d5", cat:"dog", name:"Корм Myfoodie для щенков - говядина и курица", desc:"Natural Food Puppy · все породы · 1,8 кг", img:"food_puppy", variants:[{l:"1,8 кг",p:2300}]},
-   {id:"d6", cat:"dog", name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
+   {id:"d6", cat:"dog", soldout:true, name:"Корм Myfoodie с пробиотиками - говядина, курица, черника", desc:"Говядина, курица, черника · Active Probiotics · 1,8 кг", img:"food_probio", variants:[{l:"1,8 кг",p:2500}]},
    {id:"d7", cat:"dog", name:"Корм Myfoodie - курица", desc:"Двойное мясо · все породы", img:"food_chicken", variants:[{l:"1 кг",p:1100},{l:"10 кг",p:10000}]},
    {id:"d9", cat:"dog", name:"Корм Myfoodie - утка и лосось", desc:"Adult · для взрослых собак всех пород", img:"food_ducksalmon", soldout:true, variants:[{l:"700 г",p:900},{l:"7 кг",p:8500}]},
    {id:"c2", cat:"cat", isNew:true, name:"Корм Myfoodie для кошек - курица и тунец", desc:"Свежее мясо · для взрослых кошек · таурин", img:"cat_tuna", variants:[{l:"1 кг",p:1200},{l:"10 кг",p:11000}]},
-   {id:"c1", cat:"cat", name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
+   {id:"c1", cat:"cat", soldout:true, name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
    {id:"t1", cat:"treat", name:"Мясные палочки - говядина и треска", desc:"Global Natural · 360 г", img:"treat_stick_beef", price:700},
    {id:"t2", cat:"treat", name:"Мясные палочки - курица", desc:"Global Natural · 360 г", img:"treat_stick_chick", price:700},
    {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_beef", price:500},
    {id:"t4", cat:"treat", name:"Мясные кубики - утка", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_duck", price:500},
    {id:"t5", cat:"treat", name:"Мясные кубики с начинкой - говядина", desc:"Аргентинская говядина · 180 г", img:"treat_cube_beef2", price:600},
-   {id:"v1", cat:"vit", name:"Витамины Myfoodie для собак - мультивитамины", desc:"10 витаминов · таблетки · 100 г", img:"vit_multi2", price:800},
-   {id:"v2", cat:"vit", name:"Витамины Myfoodie для собак - молочный кальций", desc:"Milk Calcium · таблетки · 100 г", img:"vit_calcium2", price:800},
+   {id:"v1", cat:"vit", name:"Витамины Myfoodie для собак - мультивитамины", desc:"Витамины · 100 г", img:"vit_multi2", price:800},
+   {id:"v2", cat:"vit", name:"Витамины Myfoodie для собак - молочный кальций", desc:"Витамины с кальцием · 100 г", img:"vit_calcium2", price:800},
    {id:"b8", cat:"bed", name:"Лежанка-бублик, бежевая", desc:"60×60 см · с бортиком", img:"bed_beige", price:1800},
    {id:"b7", cat:"bed", name:"Лежанка-бублик, серая", desc:"60×60 см · с бортиком", img:"bed_grey", price:1800},
    {id:"b13", cat:"bed", name:"Лежанка-бублик, коричневая", desc:"60×60 см · с бортиком", img:"bed_brown", price:1800},
@@ -87,11 +87,11 @@ applyPromo();
 // about - описание (абзацы через пустую строку), features - список плюсов, usage - как применять, facts - характеристики
 const DETAILS = {
      v1: {
-            about:`Жевательные таблетки с комплексом из 10 витаминов для собак всех пород. Восполняют то, чего может не хватать в ежедневном рационе, и поддерживают общее здоровье питомца.
+            about:`Жевательные таблетки с комплексом витаминов для собак всех пород. Восполняют то, чего может не хватать в ежедневном рационе, и поддерживают общее здоровье питомца.
 
 Особенно полезны в периоды повышенной нагрузки: при активном росте щенка, в межсезонье, после болезни, а также пожилым собакам. Таблетки собаки едят как лакомство, поэтому их удобно давать каждый день.`,
             features:[
-                   "Комплекс из 10 витаминов в одной таблетке",
+                   "Комплекс витаминов в одной таблетке",
                    "Поддерживает иммунитет и общий тонус",
                    "Помогает сохранить здоровую кожу и блестящую шерсть",
                    "Жевательные таблетки со вкусом, который нравится собакам"
