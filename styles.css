@@ -293,3 +293,4 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
   .pbody{grid-template-columns:1.1fr 1fr}
   .pmain{aspect-ratio:4/5}
 }
+.heropromo[hidden],.promobar[hidden]{display:none!important}
