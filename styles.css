@@ -307,3 +307,7 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
   .tile{min-height:150px}
 }
 @media(max-width:640px){.hero{padding-bottom:300px}.trust{gap:10px}}
+.grouphead{display:flex;align-items:center;gap:12px;font-size:26px;font-weight:800;letter-spacing:-.025em;margin:4px 0 14px}
+.grouphead::before{content:"";width:6px;height:26px;border-radius:4px;background:var(--tc,var(--brand));flex:0 0 auto}
+@media(max-width:640px){.grouphead{font-size:22px}.grouphead::before{height:22px}}
+@media(min-width:901px){.herovid{right:calc(max(18px,(100% - 1180px)/2) + 14%)}}

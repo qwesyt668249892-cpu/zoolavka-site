@@ -340,7 +340,7 @@ function renderGrid(){
      if(!activeCat && !q){
             let h='<div class="cats-hero">';
             GROUPS.forEach(g=>{
-                     h+='<div class="catgroup"><h2 class="grouphead">'+g.title+'</h2><div class="tilegrid">';
+                     h+='<div class="catgroup"><h2 class="grouphead" style="--tc:'+g.color+'">'+g.title+'</h2><div class="tilegrid">';
                      g.cats.forEach(cid=>{
                                 const im=IMAGES['cat_'+cid];
                                 h+='<button class="tile'+(im?' has-img':'')+'" data-cat="'+cid+'" style="--tc:'+g.color+'" aria-label="'+TILELBL[cid]+'">'+
