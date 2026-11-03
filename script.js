@@ -625,6 +625,9 @@ if(activeCat) setTimeout(()=>grid.scrollIntoView({block:'start'}),50);
 const pmodal=document.getElementById('pmodal');
 const zoom=document.getElementById('pzoom');
 function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtComp(t){
+     return t.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{ const e=esc(l); return /:$/.test(l) ? '<span class="chead">'+e+'</span>' : e; }).join('\n');
+}
 function openProduct(p, startKey){
      const d=DETAILS[p.id]||{};
      const comp=COMPOSITION[p.id];
@@ -645,7 +648,7 @@ function openProduct(p, startKey){
             (d.features ? '<section><h3>Преимущества</h3><ul class="pfeat">'+d.features.map(f=>'<li>'+esc(f)+'</li>').join('')+'</ul></section>' : '')+
             (d.usage ? '<section><h3>Как давать</h3><p>'+esc(d.usage)+'</p></section>' : '')+
             (d.facts ? '<section><h3>Характеристики</h3><dl class="pfacts">'+d.facts.map(f=>'<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>').join('')+'</dl></section>' : '')+
-            (comp ? '<section><h3>Состав</h3><div class="comptext">'+esc(comp)+'</div></section>' : '');
+            (comp ? '<section class="pcomp"><h3>Состав</h3><div class="comptext clamp">'+fmtComp(comp)+'</div><button type="button" class="pmore">Читать полностью</button></section>' : '');
      pmodal.querySelector('.pbody').innerHTML =
             '<div class="pgal"><div class="pmain" title="Нажмите, чтобы увеличить"><img src="'+IMAGES[key]+'" alt="'+esc(p.name)+'">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'<span class="pzoomhint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg></span></div>'+thumbs+'</div>'+
             '<div class="pinfo">'+
@@ -683,6 +686,11 @@ function openProduct(p, startKey){
             setTimeout(()=>{ addb.classList.remove('added'); addb.textContent='В корзину'; },1100);
      };
      pmodal.classList.add('on'); pmodal.querySelector('.psheet').scrollTop=0;
+     const ct=b.querySelector('.pcomp .comptext'), mb=b.querySelector('.pmore');
+     if(ct && mb){
+            if(ct.scrollHeight <= ct.clientHeight+20){ ct.classList.remove('clamp'); mb.remove(); }
+            else mb.onclick=()=>{ const open=ct.classList.toggle('clamp'); mb.textContent = open ? 'Читать полностью' : 'Свернуть'; if(open) ct.closest('section').scrollIntoView({block:'nearest',behavior:'smooth'}); };
+     }
      document.body.style.overflow='hidden';
      if(location.hash!=='#'+p.id) history.replaceState(null,'','#'+p.id);
 }
