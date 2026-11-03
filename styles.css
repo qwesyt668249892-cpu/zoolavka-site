@@ -311,3 +311,15 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
 .grouphead::before{content:"";width:6px;height:26px;border-radius:4px;background:var(--tc,var(--brand));flex:0 0 auto}
 @media(max-width:640px){.grouphead{font-size:22px}.grouphead::before{height:22px}}
 @media(min-width:901px){.herovid{right:calc(max(18px,(100% - 1180px)/2) + 14%)}}
+/* карточка товара на телефоне */
+@media(max-width:759px){
+  .psheet{height:92dvh;max-height:92dvh;padding:0;border-radius:20px 20px 0 0}
+  .pclose{position:fixed;top:calc(8dvh + 12px);right:12px;float:none;width:42px;height:42px;z-index:5}
+  .pbody{gap:0}
+  .pgal{padding:12px 12px 0}
+  .pmain{aspect-ratio:auto;height:min(42dvh,340px);border-radius:14px}
+  .pinfo{padding:14px 16px 0;gap:8px}
+  .pinfo h2{font-size:20px}
+  .pinfo .buyrow{position:sticky;bottom:0;z-index:2;order:99;margin:6px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -6px 16px rgba(70,44,16,.06)}
+  .pinfo section:last-of-type{padding-bottom:8px}
+}

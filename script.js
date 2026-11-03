@@ -692,10 +692,12 @@ function openProduct(p, startKey){
             else mb.onclick=()=>{ const open=ct.classList.toggle('clamp'); mb.textContent = open ? 'Читать полностью' : 'Свернуть'; if(open) ct.closest('section').scrollIntoView({block:'nearest',behavior:'smooth'}); };
      }
      document.body.style.overflow='hidden';
-     if(location.hash!=='#'+p.id) history.replaceState(null,'','#'+p.id);
+     if(location.hash!=='#'+p.id){ if(history.state&&history.state.zlp) history.replaceState({zlp:1},'','#'+p.id); else history.pushState({zlp:1},'','#'+p.id); }
 }
+function hideProduct(){ pmodal.classList.remove('on'); zoom.classList.remove('on'); document.body.style.overflow=''; }
 function closeProduct(){
-     pmodal.classList.remove('on'); zoom.classList.remove('on'); document.body.style.overflow='';
+     if(history.state && history.state.zlp){ history.back(); return; }
+     hideProduct();
      history.replaceState(null,'',activeCat ? '#'+activeCat : location.pathname+location.search);
 }
 document.getElementById('closeProduct').onclick=closeProduct;
@@ -706,9 +708,10 @@ window.addEventListener('popstate',()=>{
      const id=location.hash.slice(1);
      const p=PRODUCTS.find(x=>x.id===id);
      if(p){ openProduct(p); return; }
-     if(pmodal.classList.contains('on')){ pmodal.classList.remove('on'); zoom.classList.remove('on'); document.body.style.overflow=''; }
-     activeCat = CATS.some(c=>c.id===id) ? id : '';
-     renderGrid();
+     const wasOpen=pmodal.classList.contains('on');
+     if(wasOpen) hideProduct();
+     const nc = CATS.some(c=>c.id===id) ? id : '';
+     if(!wasOpen || nc!==activeCat){ activeCat=nc; renderGrid(); }
 });
 (function openFromHash(){ const id=location.hash.slice(1); const p=PRODUCTS.find(x=>x.id===id); if(p) openProduct(p); })();
 
