@@ -1,4 +1,4 @@
-const IMAGES = {"food_beef_gf": "images/food_beef_gf.webp", "food_venison": "images/food_venison.webp", "food_beef2": "images/food_beef2.webp", "food_puppy": "images/food_puppy.webp", "food_probio": "images/food_probio.webp", "food_chicken": "images/food_chicken.webp", "food_ducksalmon": "images/food_ducksalmon.webp", "food_small": "images/food_small.webp", "cat_tuna": "images/cat_tuna.webp", "cat_chicken": "images/cat_chicken.webp", "treat_stick_beef": "images/treat_stick_beef.webp", "treat_stick_chick": "images/treat_stick_chick.webp", "treat_cube_beef": "images/treat_cube_beef.webp", "treat_cube_duck": "images/treat_cube_duck.webp", "vit_multi": "images/vit_multi.webp", "vit_calcium": "images/vit_calcium.webp", "bed_black": "images/bed_black.webp", "bed_cream": "images/bed_cream.webp", "bed_yellow": "images/bed_yellow.webp", "bed_green": "images/bed_green.webp", "bed_pink": "images/bed_pink.webp", "bed_grey": "images/bed_grey2.webp", "bed_beige": "images/bed_beige2.webp", "bed_brown": "images/bed_brown.webp", "bed_lavender": "images/bed_lavender2.webp", "bed_blue": "images/bed_blue.webp", "bed_whitepurple": "images/bed_whitepurple.webp", "bed_pinkcat": "images/bed_pinkcat.webp", "acc_carrier": "images/acc_carrier.webp", "acc_waterer": "images/acc_waterer.webp", "pel_a": "images/pel_a.webp", "pel_b": "images/pel_b.webp", "pel_c": "images/pel_c.webp", "pel_d": "images/pel_d.webp", "pel_e": "images/pel_e.webp", "treat_cube_beef2": "images/treat_cube_beef2.webp", "logo": "images/logo.webp", "cat_dog": "images/cat_dog.webp", "cat_cat": "images/cat_cat.webp", "cat_treat": "images/cat_treat.webp", "cat_vit": "images/cat_vit.webp", "cat_bed": "images/cat_bed.webp", "cat_pad": "images/cat_pad.webp", "cat_acc": "images/cat_acc.webp"};
+const IMAGES = {"food_beef_gf": "images/food_beef_gf.webp", "food_venison": "images/food_venison.webp", "food_beef2": "images/food_beef2.webp", "food_puppy": "images/food_puppy.webp", "food_probio": "images/food_probio.webp", "food_chicken": "images/food_chicken.webp", "food_ducksalmon": "images/food_ducksalmon.webp", "food_small": "images/food_small.webp", "cat_tuna": "images/cat_tuna.webp", "cat_chicken": "images/cat_chicken.webp", "treat_stick_beef": "images/treat_stick_beef.webp", "treat_stick_chick": "images/treat_stick_chick.webp", "treat_cube_beef": "images/treat_cube_beef.webp", "treat_cube_duck": "images/treat_cube_duck.webp", "vit_multi": "images/vit_multi.webp", "vit_calcium": "images/vit_calcium.webp", "vit_calcium2": "images/vit_calcium2.webp", "vit_multi2": "images/vit_multi2.webp", "bed_black": "images/bed_black.webp", "bed_cream": "images/bed_cream.webp", "bed_yellow": "images/bed_yellow.webp", "bed_green": "images/bed_green.webp", "bed_pink": "images/bed_pink.webp", "bed_grey": "images/bed_grey2.webp", "bed_beige": "images/bed_beige2.webp", "bed_brown": "images/bed_brown.webp", "bed_lavender": "images/bed_lavender2.webp", "bed_blue": "images/bed_blue.webp", "bed_whitepurple": "images/bed_whitepurple.webp", "bed_pinkcat": "images/bed_pinkcat.webp", "acc_carrier": "images/acc_carrier.webp", "acc_waterer": "images/acc_waterer.webp", "pel_a": "images/pel_a.webp", "pel_b": "images/pel_b.webp", "pel_c": "images/pel_c.webp", "pel_d": "images/pel_d.webp", "pel_e": "images/pel_e.webp", "treat_cube_beef2": "images/treat_cube_beef2.webp", "logo": "images/logo.webp", "cat_dog": "images/cat_dog.webp", "cat_cat": "images/cat_cat.webp", "cat_treat": "images/cat_treat.webp", "cat_vit": "images/cat_vit.webp", "cat_bed": "images/cat_bed.webp", "cat_pad": "images/cat_pad.webp", "cat_acc": "images/cat_acc.webp"};
 const PHONE_WA = "79324825181"; // WhatsApp / телефон
 const TG = "https://t.me/qwesyt66"; // личный чат для заказов
 const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонтакте
@@ -47,8 +47,8 @@ const PRODUCTS = [
    {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_beef", price:500},
    {id:"t4", cat:"treat", name:"Мясные кубики - утка", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_duck", price:500},
    {id:"t5", cat:"treat", name:"Мясные кубики с начинкой - говядина", desc:"Аргентинская говядина · 180 г", img:"treat_cube_beef2", price:600},
-   {id:"v1", cat:"vit", name:"Мультивитамины Myfoodie для собак", desc:"10 витаминов · Myfoodie", img:"vit_multi", price:800},
-   {id:"v2", cat:"vit", name:"Витамины с кальцием Myfoodie для собак", desc:"Milk Calcium · Myfoodie", img:"vit_calcium", price:800},
+   {id:"v1", cat:"vit", name:"Витамины Myfoodie для собак - мультивитамины", desc:"10 витаминов · таблетки · 100 г", img:"vit_multi2", price:800},
+   {id:"v2", cat:"vit", name:"Витамины Myfoodie для собак - молочный кальций", desc:"Milk Calcium · таблетки · 100 г", img:"vit_calcium2", price:800},
    {id:"b8", cat:"bed", name:"Лежанка-бублик, бежевая", desc:"60×60 см · с бортиком", img:"bed_beige", price:1800},
    {id:"b7", cat:"bed", name:"Лежанка-бублик, серая", desc:"60×60 см · с бортиком", img:"bed_grey", price:1800},
    {id:"b13", cat:"bed", name:"Лежанка-бублик, коричневая", desc:"60×60 см · с бортиком", img:"bed_brown", price:1800},
@@ -86,6 +86,19 @@ applyPromo();
 // Подробные карточки товаров. Добавляй сюда товары по id из PRODUCTS.
 // about - описание (абзацы через пустую строку), features - список плюсов, usage - как применять, facts - характеристики
 const DETAILS = {
+     v1: {
+            about:`Жевательные таблетки с комплексом из 10 витаминов для собак всех пород. Восполняют то, чего может не хватать в ежедневном рационе, и поддерживают общее здоровье питомца.
+
+Особенно полезны в периоды повышенной нагрузки: при активном росте щенка, в межсезонье, после болезни, а также пожилым собакам. Таблетки собаки едят как лакомство, поэтому их удобно давать каждый день.`,
+            features:[
+                   "Комплекс из 10 витаминов в одной таблетке",
+                   "Поддерживает иммунитет и общий тонус",
+                   "Помогает сохранить здоровую кожу и блестящую шерсть",
+                   "Жевательные таблетки со вкусом, который нравится собакам"
+            ],
+            usage:`Давайте как лакомство, целиком или раскрошив в корм. Дозировка зависит от веса собаки и указана на упаковке. Перед курсом для щенков, беременных собак и собак с хроническими заболеваниями лучше проконсультироваться с ветеринаром.`,
+            facts:[["Бренд","Myfoodie"],["Форма","жевательные таблетки"],["Вес","100 г"],["Для кого","собаки всех пород"]]
+     },
      v2: {
             about:`Жевательные таблетки с молочным кальцием для собак всех пород. Кальций нужен для крепких костей, зубов и суставов, особенно щенкам в период активного роста, беременным и кормящим собакам, а также пожилым питомцам.
 
@@ -97,7 +110,7 @@ const DETAILS = {
                    "Жевательные таблетки со вкусом, который нравится собакам"
             ],
             usage:`Давайте как лакомство, целиком или раскрошив в корм. Дозировка зависит от веса собаки и указана на упаковке. Перед курсом для щенков, беременных собак и собак с хроническими заболеваниями лучше проконсультироваться с ветеринаром.`,
-            facts:[["Бренд","Myfoodie"],["Форма","жевательные таблетки"],["Для кого","собаки всех пород"]]
+            facts:[["Бренд","Myfoodie"],["Форма","жевательные таблетки"],["Вес","100 г"],["Для кого","собаки всех пород"]]
      }
 };
 const COMPOSITION = {
@@ -606,6 +619,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
 (function catFromHash(){ const id=location.hash.slice(1); if(CATS.some(c=>c.id===id)) activeCat=id; else { const p=PRODUCTS.find(x=>x.id===id); if(p) activeCat=p.cat; } })();
 renderGrid(); renderCart();
+if(activeCat) setTimeout(()=>grid.scrollIntoView({block:'start'}),50);
 
 // ---------- Карточка товара (модальное окно) ----------
 const pmodal=document.getElementById('pmodal');
