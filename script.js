@@ -554,6 +554,7 @@ function orderText(){
      if(city)  t+='Город: '+city+'\n';
      if(comment) t+='Комментарий: '+comment+'\n';
      if(contact) t+='Связаться через: '+contact+'\n';
+     if(contact==='ВКонтакте' && val('cvk')) t+='Страница ВК: '+val('cvk')+'\n';
      return t;
 }
 const val=id=>document.getElementById(id).value.trim();
@@ -597,6 +598,11 @@ async function sendOrder(){
             if(consentLbl) consentLbl.classList.add('warn');
             return;
      }
+     if(val('ccontact')==='ВКонтакте' && !val('cvk')){
+            err.textContent='Укажите ссылку на вашу страницу ВКонтакте, чтобы мы могли вам написать.';
+            err.style.display='block';
+            return;
+     }
      if(consentLbl) consentLbl.classList.remove('warn');
      err.style.display='none';
      btn.disabled=true; const oldLabel=btn.innerHTML; btn.innerHTML='Отправляем…';
@@ -608,10 +614,11 @@ async function sendOrder(){
             err.style.display='none';
             Object.keys(cart).forEach(k=>delete cart[k]);
             renderCart();
-            hint.style.color='var(--ok)';
-            hint.textContent='Заказ отправлен! Мы свяжемся с вами через '+(val('ccontact')||'выбранный мессенджер')+'.';
-            btn.innerHTML='✓ Заказ отправлен';
-            setTimeout(()=>{ modal.classList.remove('on'); hint.style.color=''; hint.textContent='Мы получим заявку и сами свяжемся с вами в выбранном мессенджере.'; btn.disabled=false; btn.innerHTML=oldLabel; },3000);
+            const via=val('ccontact');
+            document.getElementById('doneText').textContent='Мы получили вашу заявку и скоро свяжемся с вами'+(via?' через '+via:'')+'.';
+            modal.classList.remove('on');
+            doneModal.classList.add('on');
+            btn.disabled=false; btn.innerHTML=oldLabel;
      }catch(e){
             btn.disabled=false; btn.innerHTML=oldLabel;
             err.textContent='Не получилось отправить автоматически — нажмите «Скопировать заказ» и пришлите его нам в сообщения ВКонтакте (vk.ru/zoolavka72).';
@@ -619,6 +626,13 @@ async function sendOrder(){
      }
 }
 document.getElementById('sendOrder').onclick=sendOrder;
+const doneModal=document.getElementById('doneModal');
+const closeDone=()=>doneModal.classList.remove('on');
+document.getElementById('doneOk').onclick=closeDone;
+doneModal.onclick=e=>{ if(e.target===doneModal) closeDone(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDone(); });
+const syncVkField=()=>{ document.getElementById('cvkWrap').style.display = val('ccontact')==='ВКонтакте' ? '' : 'none'; };
+document.getElementById('ccontact').addEventListener('change',syncVkField); syncVkField();
 document.getElementById('copyOrder').onclick=()=>{ copy(orderText()); toast('Заказ скопирован в буфер обмена'); };
 function copy(text){ try{ navigator.clipboard.writeText(text); }catch(e){ const t=document.createElement('textarea'); t.value=text; document.body.appendChild(t); t.select(); try{document.execCommand('copy');}catch(_){}
                                                                           t.remove(); } }

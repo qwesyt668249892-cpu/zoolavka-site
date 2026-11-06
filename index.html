@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="styles.css?v=11">
+<link rel="stylesheet" href="styles.css?v=12">
 <link rel="preload" as="video" href="images/herodog.webm?v=2" fetchpriority="high">
 <script type="application/ld+json">
 {
@@ -150,6 +150,16 @@
   </div>
 </aside>
 
+<!-- order success -->
+<div class="modal" id="doneModal" role="dialog" aria-modal="true" aria-label="Заказ оформлен">
+  <div class="msheet donesheet">
+    <div class="donecheck"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>Заказ оформлен!</h2>
+    <p class="lead" id="doneText">Мы получили вашу заявку и скоро свяжемся с вами.</p>
+    <button class="checkout" id="doneOk">Хорошо</button>
+  </div>
+</div>
+
 <!-- checkout modal -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Оформление заказа">
   <div class="msheet">
@@ -162,11 +172,12 @@
     <div class="field"><label for="ccomment">Комментарий</label><textarea id="ccomment" placeholder="Порода, вес питомца, пожелания по доставке…"></textarea></div>
     <div class="field"><label for="ccontact">Как с вами связаться</label>
       <select id="ccontact">
+        <option>ВКонтакте</option>
         <option>WhatsApp</option>
         <option>Telegram</option>
-        <option>Телефон (позвонить)</option>
       </select>
     </div>
+    <div class="field" id="cvkWrap"><label for="cvk">Ссылка на вашу страницу ВК</label><input id="cvk" type="text" placeholder="vk.com/id123456 или vk.com/имя"></div>
     <div class="osum" id="osum"></div>
     <label class="consent"><input type="checkbox" id="cconsent"> Согласен(на) на <a href="#" id="privacyLink">обработку персональных данных</a></label>
     <div class="send">
@@ -205,6 +216,6 @@
 <div class="pzoom" id="pzoom" aria-hidden="true"><img alt=""></div>
 
 <script src="config.js" defer></script>
-<script src="script.js?v=20" defer></script>
+<script src="script.js?v=21" defer></script>
 </body>
 </html>

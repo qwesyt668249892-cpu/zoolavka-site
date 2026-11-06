@@ -323,3 +323,11 @@ footer{background:var(--ink);color:#F3E9DC;padding:40px 0 28px;margin-top:20px}
   .pinfo .buyrow{position:sticky;bottom:0;z-index:2;order:99;margin:6px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -6px 16px rgba(70,44,16,.06)}
   .pinfo section:last-of-type{padding-bottom:8px}
 }
+
+/* окно «Заказ оформлен» */
+#doneModal{background:rgba(40,25,10,.45);z-index:80}
+.donesheet{text-align:center;padding:30px 24px 24px}
+.donecheck{width:84px;height:84px;margin:4px auto 16px;border-radius:50%;background:var(--ok);display:grid;place-items:center;box-shadow:0 8px 22px rgba(62,142,99,.35);animation:donepop .35s ease-out}
+.donesheet h2{margin:0 0 8px}
+.donesheet .lead{margin:0 0 20px}
+@keyframes donepop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
