@@ -573,8 +573,16 @@ function sendVK(text){
             document.head.appendChild(sc);
      });
 }
+// Отправка в Telegram: ждём ответ, чтобы знать, дошёл ли заказ
 function sendTG(text){
-     try{ fetch('https://api.telegram.org/bot'+TG_BOT_TOKEN+'/sendMessage?chat_id='+TG_CHAT_ID+'&text='+encodeURIComponent(text)).catch(()=>{}); }catch(e){}
+     const ctrl=('AbortController' in window)?new AbortController():null;
+     const timer=setTimeout(()=>{ try{ctrl&&ctrl.abort();}catch(e){} },12000);
+     return fetch('https://api.telegram.org/bot'+TG_BOT_TOKEN+'/sendMessage',{
+            method:'POST',
+            body:new URLSearchParams({chat_id:TG_CHAT_ID,text:text}),
+            signal:ctrl?ctrl.signal:undefined
+     }).then(r=>r.json()).then(j=>{ clearTimeout(timer); if(!j||!j.ok) throw new Error('tg error'); })
+       .catch(e=>{ clearTimeout(timer); throw e; });
 }
 async function sendOrder(){
      const btn=document.getElementById('sendOrder'), err=document.getElementById('sendErr'), hint=document.getElementById('chint'), consent=document.getElementById('cconsent'), consentLbl=consent.closest('.consent');
@@ -594,13 +602,16 @@ async function sendOrder(){
      btn.disabled=true; const oldLabel=btn.innerHTML; btn.innerHTML='Отправляем…';
      try{
             const text=orderText();
-            sendTG(text); // копия в Telegram, если у клиента открывается (не обязательно)
-            await sendVK(text);
+            // Шлём сразу в оба канала. Заказ считается отправленным, если дошёл хотя бы в один.
+            const res=await Promise.allSettled([sendTG(text), sendVK(text)]);
+            if(!res.some(r=>r.status==='fulfilled')) throw new Error('all failed');
+            err.style.display='none';
             Object.keys(cart).forEach(k=>delete cart[k]);
             renderCart();
             hint.style.color='var(--ok)';
             hint.textContent='Заказ отправлен! Мы свяжемся с вами через '+(val('ccontact')||'выбранный мессенджер')+'.';
-            setTimeout(()=>{ modal.classList.remove('on'); hint.style.color=''; hint.textContent='Мы получим заявку и сами свяжемся с вами в выбранном мессенджере.'; btn.disabled=false; btn.innerHTML=oldLabel; },1600);
+            btn.innerHTML='✓ Заказ отправлен';
+            setTimeout(()=>{ modal.classList.remove('on'); hint.style.color=''; hint.textContent='Мы получим заявку и сами свяжемся с вами в выбранном мессенджере.'; btn.disabled=false; btn.innerHTML=oldLabel; },3000);
      }catch(e){
             btn.disabled=false; btn.innerHTML=oldLabel;
             err.textContent='Не получилось отправить автоматически — нажмите «Скопировать заказ» и пришлите его нам в сообщения ВКонтакте (vk.ru/zoolavka72).';
