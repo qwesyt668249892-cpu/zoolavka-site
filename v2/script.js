@@ -7,7 +7,7 @@ const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонт
 // ВК-бот заказов (работает в РФ без VPN)
 
 // Адрес Cloudflare Worker, который пересылает заказы в Telegram и ВК (ключи хранятся там, не на сайте)
-const ORDER_URL = "";
+const ORDER_URL = "https://zoolavka-orders.qwesyt668249892.workers.dev";
 const HERO_VIDEO = "../images/herodog.webm?v=2";
 const HERO_VIDEO_FALLBACK = "../images/herodogfallback.mp4?v=3";
 
