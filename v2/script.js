@@ -323,140 +323,87 @@ function saveCart(){ try{ localStorage.setItem('zl_cart',JSON.stringify(cart)); 
 function selectCategory(id){
      activeCat=id; query=''; const qi=document.getElementById('q'); if(qi) qi.value='';
      if(location.hash!=='#'+id) history.pushState(null,'','#'+id);
-     renderGrid(); grid.scrollIntoView({behavior:'smooth',block:'start'});
+     renderGrid(); document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function goHome(){
      activeCat=''; query=''; const qi=document.getElementById('q'); if(qi) qi.value='';
      if(location.hash) history.pushState(null,'',location.pathname+location.search);
-     renderGrid(); window.scrollTo({top:0,behavior:'smooth'});
+     renderGrid(); document.getElementById('cats').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 const grid = document.getElementById('grid');
 function renderGrid(){
      const q = query.trim().toLowerCase();
+     const sec = document.getElementById('catalog');
      grid.innerHTML = '';
-     if(!activeCat && !q){
-            let h='<div class="cats-hero">';
-            GROUPS.forEach(g=>{
-                     h+='<div class="catgroup"><h2 class="grouphead" style="--tc:'+g.color+'">'+g.title+'</h2><div class="tilegrid">';
-                     g.cats.forEach(cid=>{
-                                const im=IMAGES['cat_'+cid];
-                                h+='<button class="tile'+(im?' has-img':'')+'" data-cat="'+cid+'" style="--tc:'+g.color+'" aria-label="'+TILELBL[cid]+'">'+
-                                                (im ? '<img class="tilebg" src="'+im+'" alt="" loading="lazy" decoding="async">'
-                                                                  : '<svg class="pawbg" width="96" height="96" viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="7" r="2"/><circle cx="17" cy="9" r="2"/><path d="M12 12c-2.8 0-5 2-5 4.3 0 1.5 1.2 2.4 2.8 2.4.9 0 1.5-.5 2.2-.5s1.3.5 2.2.5c1.6 0 2.8-.9 2.8-2.4C17 14 14.8 12 12 12z"/></svg>')+
-                                                '<span class="tilelabel">'+TILELBL[cid]+'</span>'+
-                                              '</button>';
-                     });
-                     h+='</div></div>';
-            });
-            h+='</div>';
-            grid.innerHTML=h;
-            grid.querySelectorAll('.tile').forEach(t=>t.onclick=()=>selectCategory(t.dataset.cat));
-            return;
-     }
+     if(!activeCat && !q){ if(sec) sec.hidden = true; return; }
+     if(sec) sec.hidden = false;
      const list = PRODUCTS.filter(p=>{
             if(activeCat && p.cat!==activeCat) return false;
             if(q && !(p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || (CATLBL[p.cat]||'').toLowerCase().includes(q))) return false;
             return true;
      });
-     const back=document.createElement('button');
-     back.className='backbtn';
-     back.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>Все разделы';
-     back.onclick=goHome;
-     grid.appendChild(back);
-     if(!list.length){ const em=document.createElement('div'); em.className='empty'; em.textContent='Ничего не нашлось. Попробуйте другой запрос.'; grid.appendChild(em); return; }
-     list.forEach(p=>{
-            const card=document.createElement('article'); card.className='card';
-            const hasVar = !!p.variants;
-            const isPromo = p.isPromo && promoActive();
-            if(isPromo) card.classList.add('promo');
-            if(p.soldout) card.classList.add('soldout');
-            card.dataset.pid = p.id;
-            const priceHTML = isPromo
-              ? '<span class="oldprice">'+money(p.originalPrice)+'</span><span class="tag">'+money(priceOf(p))+'</span>'
-                     : (hasVar && p.variants.length>1
-                                ? '<span class="tag"><span class="from">от</span>'+money(priceOf(p))+'</span>'
-                                : '<span class="tag">'+money(priceOf(p))+'</span>');
-            let thumbsHTML='', patHTML='';
-            if(p.gallery){
-                     thumbsHTML='<div class="thumbs">'+p.gallery.map((g,i)=>'<img data-g="'+g.k+'" data-n="'+g.n+'" title="'+g.n+'" class="'+(i===0?'on':'')+'" src="'+(IMAGES[g.k]||'')+'" alt="'+g.n+'" loading="lazy" decoding="async">').join('')+'</div>';
-                     patHTML='<div class="patname">Расцветка: <b class="patsel">'+p.gallery[0].n+'</b></div>';
-            }
-            let selHTML='';
-            if(hasVar && p.variants.length>1 && !p.soldout){
-                     selHTML='<select class="varsel" aria-label="Размер / фасовка">'+p.variants.map((v,i)=>'<option value="'+i+'">'+v.l+(v.oos?' - нет в наличии':' - '+money(v.p))+'</option>').join('')+'</select>';
-            }
-            const comp = COMPOSITION[p.id];
-            const compHTML = comp
-              ? '<button type="button" class="compbtn" aria-expanded="false">Состав<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>'+
-                       '<div class="comptext" hidden>'+comp.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'
-                     : '';
-            card.innerHTML =
-                     '<div class="ph"><span class="ctag">'+CATLBL[p.cat]+'</span>'+(isPromo?'<span class="promoflag">🔥 Акция</span>':(p.isNew?'<span class="promoflag">✨ Новинка</span>':''))+'<img src="'+(IMAGES[p.img]||'')+'" alt="'+p.name+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'</div>'+
-                     thumbsHTML+
-                     '<div class="cbody">'+
-                       '<div class="cname" role="button" tabindex="0">'+p.name+'</div>'+
-                       '<div class="cdesc">'+p.desc+'</div>'+
-                       '<button type="button" class="morebtn">Подробнее</button>'+
-                       patHTML+
-                       selHTML+
-                       compHTML+
-                       '<div class="pricerow">'+priceHTML+'</div>'+
-                       '<div class="buyrow">'+
-                         '<div class="qty card-qty"><button type="button" class="qminus" aria-label="Уменьшить количество">−</button><span class="qval">1</span><button type="button" class="qplus" aria-label="Увеличить количество">+</button></div>'+
-                         '<button class="addbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>В корзину</button>'+
-                       '</div>'+
-                     '</div>';
-            if(comp){
-                     const cbtn=card.querySelector('.compbtn'), ctext=card.querySelector('.comptext');
-                     cbtn.onclick=()=>{
-                                const open = ctext.hasAttribute('hidden');
-                                if(open){ ctext.removeAttribute('hidden'); cbtn.classList.add('on'); cbtn.setAttribute('aria-expanded','true'); }
-                                else{ ctext.setAttribute('hidden',''); cbtn.classList.remove('on'); cbtn.setAttribute('aria-expanded','false'); }
-                     };
-            }
-            const openThis=()=>openProduct(p, patKey);
-            card.querySelector('.ph').onclick=e=>{ if(!e.target.closest('.thumbs')) openThis(); };
-            const cn=card.querySelector('.cname'); cn.onclick=openThis; cn.onkeydown=e=>{ if(e.key==='Enter') openThis(); };
-            card.querySelector('.morebtn').onclick=openThis;
-            let patName = p.gallery ? p.gallery[0].n : "";
-            let patKey  = p.gallery ? p.gallery[0].k : "";
-            if(p.gallery){
-                     const mainImg=card.querySelector('.ph img');
-                     const patSel=card.querySelector('.patsel');
-                     card.querySelectorAll('.thumbs img').forEach(t=>{
-                                t.onclick=()=>{ patName=t.dataset.n; patKey=t.dataset.g; mainImg.src=IMAGES[patKey]; if(patSel) patSel.textContent=patName; card.querySelectorAll('.thumbs img').forEach(x=>x.classList.remove('on')); t.classList.add('on'); };
-                     });
-            }
-            const sel=card.querySelector('.varsel');
-            const tag=card.querySelector('.tag');
-            const addb=card.querySelector('.addbtn');
-            const qrow=card.querySelector('.card-qty');
-            const buyHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>В корзину';
-            function refreshVar(){
-                     const v=p.variants[ sel?+sel.value:0 ];
-                     tag.innerHTML=money(v.p);
-                     const oos=!!v.oos;
-                     addb.disabled=oos; addb.classList.toggle('oos',oos);
-                     addb.innerHTML= oos ? 'Нет в наличии' : buyHTML;
-                     if(qrow) qrow.style.visibility = oos ? 'hidden' : '';
-            }
-            if(sel){ sel.onchange=refreshVar; }
-            if(p.soldout){ addb.disabled=true; addb.classList.add('oos'); addb.textContent='Нет в наличии'; if(qrow) qrow.style.display='none'; }
-            let qv=1;
-            const qval=card.querySelector('.qval');
-            card.querySelector('.qminus').onclick=()=>{ qv=Math.max(1,qv-1); qval.textContent=qv; };
-            card.querySelector('.qplus').onclick=()=>{ qv=Math.min(99,qv+1); qval.textContent=qv; };
-            addb.onclick=()=>{
-                     const vi = sel ? +sel.value : 0;
-                     if(p.soldout || (p.variants && p.variants[vi] && p.variants[vi].oos)) return;
-                     addToCart(p, vi, qv, patName, patKey);
-                     qv=1; qval.textContent=qv;
-                     addb.classList.add('added'); addb.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Добавлено';
-                     setTimeout(()=>{ addb.classList.remove('added'); addb.innerHTML=buyHTML; },1100);
-            };
-            grid.appendChild(card);
+     const t = document.getElementById('gridTitle');
+     if(t) t.textContent = q ? 'Поиск: «'+query.trim()+'»' : (TILELBL[activeCat]||'Каталог');
+     const c = document.getElementById('gridCount');
+     if(c) c.textContent = list.length ? list.length+' '+plural(list.length,['товар','товара','товаров']) : '';
+     if(!list.length){ grid.innerHTML='<div class="empty">Ничего не нашлось. Попробуйте другой запрос.</div>'; return; }
+     list.forEach(p=>grid.appendChild(makeCard(p)));
+}
+function plural(n,f){ const m10=n%10, m100=n%100; return f[(m10===1&&m100!==11)?0:(m10>=2&&m10<=4&&(m100<10||m100>=20))?1:2]; }
+
+// Карточка товара: фото, название, фасовки кнопками, цена и «+». Подробности и состав в окне товара.
+function makeCard(p){
+     const card=document.createElement('article');
+     card.className='card'+(p.soldout?' soldout':'');
+     card.dataset.pid=p.id;
+     const isPromo = p.isPromo && promoActive();
+     const vars = p.variants || null;
+     let vi = 0;
+     if(vars){ const f=vars.findIndex(v=>!v.oos); vi = f<0 ? 0 : f; }
+     let patName = p.gallery ? p.gallery[0].n : '';
+     let patKey  = p.gallery ? p.gallery[0].k : '';
+     const badge = isPromo ? '<span class="badge hot">Акция</span>' : (p.isNew ? '<span class="badge">Новинка</span>' : '');
+     let chips = '';
+     if(vars && vars.length>1){
+            chips = '<div class="sizes">'+vars.map((v,i)=>'<button type="button" data-i="'+i+'" class="'+(i===vi?'on':'')+(v.oos?' oos':'')+'"'+(v.oos?' disabled title="Нет в наличии"':'')+'>'+esc(v.l)+'</button>').join('')+'</div>';
+     } else if(vars && vars[0].l){
+            chips = '<div class="sizes"><span class="one">'+esc(vars[0].l)+'</span></div>';
+     }
+     const sw = p.gallery ? '<div class="sw">'+p.gallery.map((g,i)=>'<button type="button" class="'+(i===0?'on':'')+'" data-g="'+g.k+'" data-n="'+esc(g.n)+'" title="'+esc(g.n)+'"><img src="'+(IMAGES[g.k]||'')+'" alt="" loading="lazy"></button>').join('')+'</div>' : '';
+     const cur = () => vars ? vars[vi].p : priceOf(p);
+     const priceHTML = isPromo
+            ? '<span class="old">'+money(p.originalPrice)+'</span><b>'+money(priceOf(p))+'</b>'
+            : '<b>'+money(cur())+'</b>';
+     card.innerHTML =
+            '<div class="ph">'+badge+'<img src="'+(IMAGES[patKey||p.img]||'')+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">'+(p.soldout?'<span class="soldflag">Нет в наличии</span>':'')+'<span class="more" aria-hidden="true">i</span></div>'+
+            '<h4 class="cname" role="button" tabindex="0">'+esc(p.name)+'</h4>'+
+            '<p class="cdesc">'+esc(p.desc)+'</p>'+
+            sw + chips +
+            '<div class="buy"><span class="price">'+priceHTML+'</span>'+
+            '<button type="button" class="add addbtn"'+(p.soldout?' disabled':'')+' aria-label="В корзину"><span class="pl">+</span><span class="ok">✓</span></button></div>';
+     const img = card.querySelector('.ph img');
+     const open = () => openProduct(p, patKey||undefined);
+     card.querySelector('.ph').onclick = open;
+     const cn = card.querySelector('.cname'); cn.onclick = open; cn.onkeydown = e=>{ if(e.key==='Enter') open(); };
+     card.querySelectorAll('.sizes button').forEach(b=>b.onclick=()=>{
+            if(b.disabled) return;
+            vi = +b.dataset.i;
+            card.querySelectorAll('.sizes button').forEach(x=>x.classList.toggle('on',x===b));
+            if(!isPromo){ const pb=card.querySelector('.price b'); pb.textContent=money(cur()); pb.classList.remove('flip'); void pb.offsetWidth; pb.classList.add('flip'); }
      });
+     card.querySelectorAll('.sw button').forEach(b=>b.onclick=()=>{
+            patKey=b.dataset.g; patName=b.dataset.n; img.src=IMAGES[patKey];
+            card.querySelectorAll('.sw button').forEach(x=>x.classList.toggle('on',x===b));
+     });
+     const add = card.querySelector('.add');
+     add.onclick = ()=>{
+            if(add.disabled || (vars && vars[vi].oos)) return;
+            addToCart(p, vi, 1, patName, patKey);
+            add.classList.add('added');
+            setTimeout(()=>add.classList.remove('added'),1100);
+     };
+     return card;
 }
 
 function addToCart(p, vi, qty, pat, patKey){
@@ -628,7 +575,14 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
 (function catFromHash(){ const id=location.hash.slice(1); if(CATS.some(c=>c.id===id)) activeCat=id; else { const p=PRODUCTS.find(x=>x.id===id); if(p) activeCat=p.cat; } })();
 renderGrid(); renderCart();
-if(activeCat) setTimeout(()=>grid.scrollIntoView({block:'start'}),50);
+if(activeCat) setTimeout(()=>document.getElementById('catalog').scrollIntoView({block:'start'}),50);
+
+// Хиты на главной
+const HITS = ["d10","d2","d3","d5"];
+(function renderHits(){ const h=document.getElementById('hitsGrid'); if(!h) return; HITS.forEach(id=>{ const p=PRODUCTS.find(x=>x.id===id); if(p) h.appendChild(makeCard(p)); }); })();
+// Плитки разделов
+document.querySelectorAll('[data-cat]').forEach(t=>t.addEventListener('click',e=>{ e.preventDefault(); selectCategory(t.dataset.cat); }));
+const backBtn=document.getElementById('backBtn'); if(backBtn) backBtn.onclick=goHome;
 
 // ---------- Карточка товара (модальное окно) ----------
 const pmodal=document.getElementById('pmodal');
