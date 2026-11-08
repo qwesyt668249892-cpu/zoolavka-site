@@ -21,9 +21,9 @@
 <meta name="ICBM" content="58.1907, 68.2530">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="styles.css?v=12">
-<link rel="preload" as="video" href="images/herodog.webm?v=2" fetchpriority="high">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="v2/style.css?v=1">
+<link rel="preload" as="video" href="images/herodog.webm?v=2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,91 +53,109 @@
   ]
 }
 </script>
-<img src="https://mc.yandex.ru/watch/112091488" style="position:absolute;left:-9999px;" alt="" /></head>
+<img src="https://mc.yandex.ru/watch/112091488" style="position:absolute;left:-9999px;" alt="" />
+</head>
 <body>
-<header>
-  <div class="wrap hrow">
-    <a class="logo" href="#" aria-label="ZooLavka">
-      <img class="logoimg" src="images/logo.webp" alt="ZooLavka">
-      <span><span class="z">Zoo</span><span class="l">Lavka</span></span>
-    </a>
-    <div class="search">
-      <span class="si" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></span>
-      <input id="q" type="search" placeholder="Поиск: корм, лежанка, витамины…" aria-label="Поиск по товарам">
-    </div>
-    <button class="cartbtn" id="openCart" aria-label="Открыть корзину">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a1.5 1.5 0 0 0 1.5 1.3h8.6a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
-      <span class="lbl">Корзина</span>
-      <span class="badge" id="badge"></span>
-    </button>
-  </div>
-</header>
 
-  <button class="mobicart" id="mobiCart" aria-label="Открыть корзину" hidden>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a1.5 1.5 0 0 0 1.5 1.3h8.6a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
-    <span class="mc-count" id="mobiCartCount">0</span>
-    <span class="mc-txt">Корзина</span>
-  </button>
+<div class="strip" aria-hidden="true"><div class="strip-in" id="strip"><span>Доставка по Тобольску и всей России</span><span>Только оригинальный Myfoodie</span><span>Подарки постоянным клиентам</span><span>Подберём корм под вашу собаку</span></div></div>
 
 <div class="promobar" id="promobar" hidden>
   <div class="wrap promobar-in">
-    <div class="pb-left">
-      <span class="pb-fire">🔥</span>
-      <div class="pb-copy">
-        <span class="pb-title">Акция</span>
-        <span class="pb-desc" id="pbDesc"></span>
-      </div>
-    </div>
+    <div class="pb-left"><span class="pb-fire">🔥</span><div class="pb-copy"><span class="pb-title">Акция</span><span class="pb-desc" id="pbDesc"></span></div></div>
     <div class="pb-timer" id="pbTimer" aria-live="polite"></div>
     <button class="pb-btn" id="pbBtn" type="button">К товару</button>
   </div>
 </div>
 
-<section class="hero">
-  <div class="kibble" id="kibble" aria-hidden="true"><div class="rundog" id="rundog"><div class="dogsprite" id="dogsprite"></div></div></div>
+<header id="hdr"><div class="wrap hb">
+  <a class="logo" href="#" aria-label="ZooLavka"><img src="images/logo.webp" alt=""><span>Zoo<b>Lavka</b></span></a>
+  <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg><input id="q" type="search" placeholder="Найти корм, лежанку, витамины…" aria-label="Поиск по товарам"></label>
+  <nav class="menu"><a href="#cats">Каталог</a><a href="#how">Как заказать</a><a href="#help">Контакты</a></nav>
+  <button class="cart" id="openCart" aria-label="Открыть корзину"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a1.5 1.5 0 0 0 1.5 1.3h8.6a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg><span class="t">Корзина</span><span class="badge-n" id="badge"></span></button>
+</div></header>
+
+<button class="mobicart" id="mobiCart" aria-label="Открыть корзину" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a1.5 1.5 0 0 0 1.5 1.3h8.6a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg><span class="mc-count" id="mobiCartCount">0</span><span class="mc-txt">Корзина</span></button>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-text">
+      <h1><span class="pop" style="--d:.05s">Забота</span> <span class="pop" style="--d:.15s">о питомце</span><br><span class="hl pop" style="--d:.3s">каждый день</span></h1>
+      <p class="note pop" style="--d:.55s">собака точно оценит ♥</p>
+      <p class="lead pop" style="--d:.65s">Премиальные корма Myfoodie для собак и кошек, лакомства, витамины и уютные лежанки. Доставка по Тобольску и России.</p>
+      <div class="cta pop" style="--d:.8s">
+        <a class="btn btn-o" href="#cats">Выбрать корм →</a>
+        <a class="btn btn-w" href="#help">Помочь с выбором</a>
+      </div>
+      <div class="pills pop" style="--d:.95s"><span>🚚 Доставка по России</span><span>✅ Оригинал Myfoodie</span><span>🎁 Подарки постоянным</span></div>
+    </div>
+    <div class="stage">
+      <div class="plate"></div>
+      <div class="pup" id="kibble"><div class="rundog" id="rundog"><div class="dogsprite" id="dogsprite"></div></div></div>
+      <div class="stamp" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="cp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs><text font-family="Onest" font-weight="700" font-size="10.5"><textPath href="#cp" textLength="228" lengthAdjust="spacing">ОРИГИНАЛ • MYFOODIE • ОРИГИНАЛ • MYFOODIE • </textPath></text></svg><b>🐾</b></div>
+      <a class="chat" href="https://t.me/ZooLavka66" target="_blank" rel="noopener"><i>Какой корм подойдёт моей собаке?</i><b>Напишите породу и вес, подберём 🐾</b></a>
+      <a class="heropromo" id="heroPromo" href="#" hidden><span class="ctag" id="heroPromoCat"></span><img id="heroPromoImg" src="" alt=""></a>
+    </div>
+  </section>
+</div>
+
+<section class="cats" id="cats">
   <div class="wrap">
-    <h1>Забота о питомце — <span>каждый день</span></h1>
-    <p class="sub">Премиальные корма Myfoodie для собак и кошек, лакомства, витамины и уютные лежанки. Доставка по Тобольску и России.</p>
-    <div class="trust">
-      <div class="tp"><span class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v11H1z"/><path d="M14 8h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>Доставка по Тобольску и России</div>
-      <div class="tp"><span class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="7" r="2"/><circle cx="17" cy="9" r="2"/><path d="M12 12c-2.8 0-5 2-5 4.3 0 1.5 1.2 2.4 2.8 2.4.9 0 1.5-.5 2.2-.5s1.3.5 2.2.5c1.6 0 2.8-.9 2.8-2.4C17 14 14.8 12 12 12z"/></svg></span>Только премиум Myfoodie</div>
-      <div class="tp"><span class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5M12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5"/></svg></span>Приятные подарки постоянным клиентам</div>
+    <div class="title rv"><h2>Что ищем сегодня?</h2><span class="hint">выбирайте раздел 👇</span></div>
+    <div class="bento">
+      <a class="tile t-dog rv" href="#dog" data-cat="dog"><h3>Корм для <span>собак</span></h3><div class="stack"><img src="images/food_puppy.webp" alt=""><img src="images/food_beef_gf.webp" alt=""><img src="images/food_venison.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-cat rv" href="#cat" data-cat="cat"><h3>Корм для кошек</h3><div class="stack"><img src="images/cat_tuna.webp" alt=""><img src="images/cat_chicken.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-treat rv" href="#treat" data-cat="treat"><h3>Лакомства</h3><div class="stack"><img src="images/treat_stick_beef.webp" alt=""><img src="images/treat_cube_beef.webp" alt=""><img src="images/treat_cube_duck.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-vit rv" href="#vit" data-cat="vit"><h3>Витамины</h3><div class="stack"><img src="images/vit_multi.webp" alt=""><img src="images/vit_calcium.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-bed rv" href="#bed" data-cat="bed"><h3>Лежанки</h3><div class="stack"><img src="images/bed_pink.webp" alt=""><img src="images/bed_green.webp" alt=""><img src="images/bed_yellow.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-pad rv" href="#pad" data-cat="pad"><h3>Пелёнки</h3><div class="stack"><img src="images/pel_b.webp" alt=""><img src="images/pel_a.webp" alt=""><img src="images/pel_c.webp" alt=""></div><span class="go">→</span></a>
+      <a class="tile t-acc rv" href="#acc" data-cat="acc"><h3>Аксессуары</h3><div class="stack"><img src="images/acc_waterer.webp" alt=""><img src="images/acc_carrier.webp" alt=""></div><span class="go">→</span></a>
     </div>
   </div>
-  <a class="heropromo" id="heroPromo" href="#" aria-label="Акционный товар" hidden>
-    <span class="ctag" id="heroPromoCat"></span>
-    <span class="promoflag">🔥 Акция</span>
-    <img id="heroPromoImg" src="" alt="">
-  </a>
 </section>
 
-<main class="wrap"><div class="grid" id="grid"></div></main>
+<main class="wrap">
+  <section class="sec catalog" id="catalog" hidden>
+    <div class="title"><div><button class="back" id="backBtn" type="button">← Все разделы</button><h2 id="gridTitle">Каталог</h2></div><span class="hint" id="gridCount"></span></div>
+    <div class="grid" id="grid"></div>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <div class="fgrid">
-      <div class="fcol brandcol">
-        <div class="flogo">Zoo<span class="l">Lavka</span></div>
-        <p class="fslogan">Интернет-магазин кормов Myfoodie в Тобольске. Доставка по Тобольску и России.</p>
-      </div>
-      <div class="fcol">
-        <h3>Связаться</h3>
-        <a href="tel:+79829195210"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg>8 (982) 919-52-10</a>
-        <a href="https://t.me/ZooLavka66" target="_blank" rel="noopener"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.7 1.5 1.8 5.6c.3.8 1.3 1 1.9.3l2.5-2.6 4.7 3.5c.7.5 1.7.1 1.9-.7L23 5.5c.2-1-.7-1.7-1.1-1.2Z"/></svg>t.me/ZooLavka66</a>
-        <a href="https://vk.ru/zoolavka72" target="_blank" rel="noopener"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13 18c-6 0-9.6-4.2-9.8-11.2h3c.1 5.1 2.4 7.2 4.1 7.6V6.8h2.8v4.3c1.7-.2 3.5-2.1 4.1-4.3h2.8c-.5 2.7-2.4 4.6-3.8 5.4 1.4.7 3.6 2.4 4.4 5.8h-3.1c-.6-2-2.3-3.5-4.4-3.7V18H13Z"/></svg>vk.ru/zoolavka72</a>
-      </div>
-      <div class="fcol">
-        <h3>Покупателям</h3>
-        <p><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v11H1z"/><path d="M14 8h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Доставка по Тобольску и России</p>
-        <p><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/></svg>Только оригинальная продукция</p>
-        <p><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5M12 7s1.5-4 4-4a2.5 2.5 0 0 1 0 5"/></svg>Приятные подарки постоянным клиентам</p>
-        <a href="#" id="privacyLinkFooter">Политика обработки персональных данных</a>
-      </div>
+  <section class="sec" id="hits">
+    <div class="title rv"><h2>Любимое у хвостиков</h2><span class="hint">нажмите на товар, чтобы узнать состав</span></div>
+    <div class="grid" id="hitsGrid"></div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="title rv"><h2>Как заказать</h2><span class="hint">проще, чем кажется</span></div>
+    <div class="path" id="path">
+      <div class="trail"></div>
+      <div class="st rv"><div class="num">🛒</div><span class="hint">шаг 1</span><h4>Соберите корзину</h4><p>Выберите корм и фасовку на сайте.</p></div>
+      <div class="st rv"><div class="num">📝</div><span class="hint">шаг 2</span><h4>Оставьте заявку</h4><p>Имя, телефон и город. Это минута.</p></div>
+      <div class="st rv"><div class="num">💬</div><span class="hint">шаг 3</span><h4>Мы напишем</h4><p>В ВКонтакте, Telegram или WhatsApp.</p></div>
+      <div class="st rv"><div class="num">📦</div><span class="hint">шаг 4</span><h4>Получите заказ</h4><p>По Тобольску и в любой город России.</p></div>
     </div>
-    <p class="fdisclaimer">Информация на сайте носит справочный характер и не является публичной офертой в соответствии со ст. 437 Гражданского кодекса РФ. Точные наличие, цены и сроки доставки уточняйте у продавца при оформлении заказа.</p>
-    <div class="fbottom"><span>© ZooLavka, <span id="yr"></span></span><span>Заказы принимаем во ВКонтакте, Telegram, WhatsApp и по телефону</span></div>
+  </section>
+</main>
+
+<section class="help" id="help">
+  <div class="wrap help-in">
+    <div class="rv"><h2>Не знаете, <u>какой корм</u> подойдёт?</h2><p>Напишите породу, возраст и вес собаки. Подберём линейку и фасовку.</p></div>
+    <div class="btns rv">
+      <a href="https://t.me/ZooLavka66" target="_blank" rel="noopener"><span class="i">✈️</span><span>Telegram<small>t.me/ZooLavka66</small></span><span class="ar">→</span></a>
+      <a href="https://vk.ru/zoolavka72" target="_blank" rel="noopener"><span class="i">💬</span><span>ВКонтакте<small>vk.ru/zoolavka72</small></span><span class="ar">→</span></a>
+      <a href="tel:+79829195210"><span class="i">📞</span><span>Телефон<small>8 (982) 919-52-10</small></span><span class="ar">→</span></a>
+    </div>
   </div>
-</footer>
+</section>
+
+<footer><div class="wrap">
+  <div class="fb">
+    <span class="logo">Zoo<b>Lavka</b></span>
+    <span>Интернет-магазин кормов Myfoodie в Тобольске</span>
+    <a href="#" id="privacyLinkFooter">Политика обработки персональных данных</a>
+    <span>© ZooLavka, <span id="yr"></span></span>
+  </div>
+  <p class="disc">Информация на сайте носит справочный характер и не является публичной офертой в соответствии со ст. 437 Гражданского кодекса РФ. Точные наличие, цены и сроки доставки уточняйте у продавца при оформлении заказа.</p>
+</div></footer>
 
 <!-- cart drawer -->
 <div class="scrim" id="scrim"></div>
@@ -178,6 +196,7 @@
       </select>
     </div>
     <div class="field" id="cvkWrap"><label for="cvk">Ссылка на вашу страницу ВК</label><input id="cvk" type="text" placeholder="vk.com/id123456 или vk.com/имя"></div>
+    <div class="hpf" aria-hidden="true"><input id="cweb" type="text" tabindex="-1" autocomplete="off"></div>
     <div class="osum" id="osum"></div>
     <label class="consent"><input type="checkbox" id="cconsent"> Согласен(на) на <a href="#" id="privacyLink">обработку персональных данных</a></label>
     <div class="send">
@@ -215,7 +234,8 @@
 </div>
 <div class="pzoom" id="pzoom" aria-hidden="true"><img alt=""></div>
 
-<script src="config.js" defer></script>
-<script src="script.js?v=21" defer></script>
+
+<script src="v2/script.js?v=4" defer></script>
+<script src="v2/anim.js?v=4" defer></script>
 </body>
 </html>
