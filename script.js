@@ -3,13 +3,11 @@ const PHONE_WA = "79829195210"; // WhatsApp / телефон
 const TG = "https://t.me/qwesyt66"; // личный чат для заказов
 const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонтакте
 
-const TG_BOT_TOKEN = "8713647672:AAG7TLFs3OGaZc7gqZWQIsmFzac8axNUk18";
-const TG_CHAT_ID   = "958072190";
 
 // ВК-бот заказов (работает в РФ без VPN)
-const VK_TOKEN   = window.ZL_VK_TOKEN || ""; // ключ лежит в config.js
-const VK_PEER_ID = "142119791"; // ID страницы ВК, куда приходят заказы
 
+// Адрес Cloudflare Worker, который пересылает заказы в Telegram и ВК (ключи хранятся там, не на сайте)
+const ORDER_URL = "https://zoolavka-orders.qwesyt668249892.workers.dev";
 const HERO_VIDEO = "images/herodog.webm?v=2";
 const HERO_VIDEO_FALLBACK = "images/herodogfallback.mp4?v=3";
 
@@ -559,30 +557,17 @@ function orderText(){
 }
 const val=id=>document.getElementById(id).value.trim();
 
-// Отправка в ВК через JSONP: api.vk.com доступен в РФ без VPN
-function sendVK(text){
-     return new Promise((resolve,reject)=>{
-            const cb='vkcb_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
-            if(!VK_TOKEN) return reject(new Error('no token'));
-            const sc=document.createElement('script');
-            const done=(ok,why)=>{ clearTimeout(timer); delete window[cb]; sc.remove(); ok?resolve():reject(new Error(why)); };
-            const timer=setTimeout(()=>done(false,'timeout'),12000);
-            window[cb]=r=>{ (r && r.response) ? done(true) : done(false,'vk error '+JSON.stringify(r&&r.error)); };
-            sc.onerror=()=>done(false,'network');
-            sc.src='https://api.vk.com/method/messages.send?peer_id='+VK_PEER_ID+'&random_id='+Math.floor(Math.random()*2e9)
-                  +'&message='+encodeURIComponent(text)+'&access_token='+VK_TOKEN+'&v=5.199&callback='+cb;
-            document.head.appendChild(sc);
-     });
-}
-// Отправка в Telegram: ждём ответ, чтобы знать, дошёл ли заказ
-function sendTG(text){
+// Отправка заказа через Worker: сам сайт ключей не знает
+function sendWorker(text){
+     if(!ORDER_URL) return Promise.reject(new Error('no endpoint'));
      const ctrl=('AbortController' in window)?new AbortController():null;
-     const timer=setTimeout(()=>{ try{ctrl&&ctrl.abort();}catch(e){} },12000);
-     return fetch('https://api.telegram.org/bot'+TG_BOT_TOKEN+'/sendMessage',{
+     const timer=setTimeout(()=>{ try{ctrl&&ctrl.abort();}catch(e){} },15000);
+     return fetch(ORDER_URL,{
             method:'POST',
-            body:new URLSearchParams({chat_id:TG_CHAT_ID,text:text}),
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({text:text, hp:(document.getElementById('cweb')||{}).value||''}),
             signal:ctrl?ctrl.signal:undefined
-     }).then(r=>r.json()).then(j=>{ clearTimeout(timer); if(!j||!j.ok) throw new Error('tg error'); })
+     }).then(r=>r.json()).then(j=>{ clearTimeout(timer); if(!j||!j.ok) throw new Error('order error'); })
        .catch(e=>{ clearTimeout(timer); throw e; });
 }
 async function sendOrder(){
@@ -609,8 +594,7 @@ async function sendOrder(){
      try{
             const text=orderText();
             // Шлём сразу в оба канала. Заказ считается отправленным, если дошёл хотя бы в один.
-            const res=await Promise.allSettled([sendTG(text), sendVK(text)]);
-            if(!res.some(r=>r.status==='fulfilled')) throw new Error('all failed');
+            await sendWorker(text);
             err.style.display='none';
             Object.keys(cart).forEach(k=>delete cart[k]);
             renderCart();

@@ -1,1 +1,1 @@
-window.ZL_VK_TOKEN = "vk1.a.r44h1bp0BAhh3X42hxWaS7-KaG0FZujKqmBeTV_klx9l6IqbqZ4EUoerGWNzn5qVntnjVyo-6dv07UY9FZbu4HQtweM3hGfkfRcBVOMUL2ycgwQBQ8zDfnoPUWRtgATWk0320x3GGtlbq8GbO_IMLol8VchPhKPbTXNLUQoTda6ZccMmKd9WAQEqmBvBxCFKUMdaWuv9zIgGjwqwa4jjEA";
+// Ключи больше не хранятся на сайте. Заказы отправляются через Cloudflare Worker.
