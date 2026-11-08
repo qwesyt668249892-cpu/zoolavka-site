@@ -338,3 +338,15 @@ footer{padding:44px 0 90px;font-size:14.5px;color:var(--muted)}
 }
 
 .hpf{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* упаковки на плитках: прозрачный фон, без смешивания цвета с плиткой */
+.stack img[src$="_t.webp"]{mix-blend-mode:normal;filter:drop-shadow(0 8px 10px rgba(22,35,58,.12))}
+/* герой на телефоне: чат под карточкой с собакой, не перекрывает её */
+@media(max-width:900px){
+  .stage{aspect-ratio:1/1.36}
+  .chat{bottom:0;left:50%;margin-left:-120px;width:240px;scale:1;max-width:none}
+  .chat i,.chat b{font-size:12.5px;padding:8px 11px}
+}
+
+/* прозрачные фото: не смешивать цвет упаковки с фоном карточки */
+img[src*="_t.webp"]{mix-blend-mode:normal!important}

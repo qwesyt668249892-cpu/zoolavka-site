@@ -1,4 +1,4 @@
-const IMAGES = {"food_beef_gf": "../images/food_beef_gf.webp", "food_venison": "../images/food_venison.webp", "food_beef2": "../images/food_beef2.webp", "food_puppy": "../images/food_puppy.webp", "food_probio": "../images/food_probio.webp", "food_chicken": "../images/food_chicken.webp", "food_ducksalmon": "../images/food_ducksalmon.webp", "food_small": "../images/food_small.webp", "cat_tuna": "../images/cat_tuna.webp", "cat_chicken": "../images/cat_chicken.webp", "treat_stick_beef": "../images/treat_stick_beef.webp", "treat_stick_chick": "../images/treat_stick_chick.webp", "treat_cube_beef": "../images/treat_cube_beef.webp", "treat_cube_duck": "../images/treat_cube_duck.webp", "vit_multi": "../images/vit_multi.webp", "vit_calcium": "../images/vit_calcium.webp", "vit_calcium2": "../images/vit_calcium2.webp", "vit_multi2": "../images/vit_multi2.webp", "bed_black": "../images/bed_black.webp", "bed_cream": "../images/bed_cream.webp", "bed_yellow": "../images/bed_yellow.webp", "bed_green": "../images/bed_green.webp", "bed_pink": "../images/bed_pink.webp", "bed_grey": "../images/bed_grey2.webp", "bed_beige": "../images/bed_beige2.webp", "bed_brown": "../images/bed_brown.webp", "bed_lavender": "../images/bed_lavender2.webp", "bed_blue": "../images/bed_blue.webp", "bed_whitepurple": "../images/bed_whitepurple.webp", "bed_pinkcat": "../images/bed_pinkcat.webp", "acc_carrier": "../images/acc_carrier.webp", "acc_waterer": "../images/acc_waterer.webp", "pel_a": "../images/pel_a.webp", "pel_b": "../images/pel_b.webp", "pel_c": "../images/pel_c.webp", "pel_d": "../images/pel_d.webp", "pel_e": "../images/pel_e.webp", "treat_cube_beef2": "../images/treat_cube_beef2.webp", "logo": "../images/logo.webp", "cat_dog": "../images/cat_dog.webp", "cat_cat": "../images/cat_cat.webp", "cat_treat": "../images/cat_treat.webp", "cat_vit": "../images/cat_vit.webp", "cat_bed": "../images/cat_bed.webp", "cat_pad": "../images/cat_pad.webp", "cat_acc": "../images/cat_acc.webp"};
+const IMAGES = {"food_beef_gf": "../images/food_beef_gf_t.webp", "food_venison": "../images/food_venison_t.webp", "food_beef2": "../images/food_beef2_t.webp", "food_puppy": "../images/food_puppy_t.webp", "food_probio": "../images/food_probio_t.webp", "food_chicken": "../images/food_chicken_t.webp", "food_ducksalmon": "../images/food_ducksalmon_t.webp", "food_small": "../images/food_small_t.webp", "cat_tuna": "../images/cat_tuna_t.webp", "cat_chicken": "../images/cat_chicken_t.webp", "treat_stick_beef": "../images/treat_stick_beef_t.webp", "treat_stick_chick": "../images/treat_stick_chick_t.webp", "treat_cube_beef": "../images/treat_cube_beef_t.webp", "treat_cube_duck": "../images/treat_cube_duck_t.webp", "vit_multi": "../images/vit_multi_t.webp", "vit_calcium": "../images/vit_calcium_t.webp", "vit_calcium2": "../images/vit_calcium2_t.webp", "vit_multi2": "../images/vit_multi2_t.webp", "bed_black": "../images/bed_black_t.webp", "bed_cream": "../images/bed_cream_t.webp", "bed_yellow": "../images/bed_yellow_t.webp", "bed_green": "../images/bed_green_t.webp", "bed_pink": "../images/bed_pink_t.webp", "bed_grey": "../images/bed_grey2_t.webp", "bed_beige": "../images/bed_beige2_t.webp", "bed_brown": "../images/bed_brown_t.webp", "bed_lavender": "../images/bed_lavender2_t.webp", "bed_blue": "../images/bed_blue_t.webp", "bed_whitepurple": "../images/bed_whitepurple_t.webp", "bed_pinkcat": "../images/bed_pinkcat_t.webp", "acc_carrier": "../images/acc_carrier_t.webp", "acc_waterer": "../images/acc_waterer_t.webp", "pel_a": "../images/pel_a.webp", "pel_b": "../images/pel_b.webp", "pel_c": "../images/pel_c.webp", "pel_d": "../images/pel_d.webp", "pel_e": "../images/pel_e.webp", "treat_cube_beef2": "../images/treat_cube_beef2_t.webp", "logo": "../images/logo.webp", "cat_dog": "../images/cat_dog.webp", "cat_cat": "../images/cat_cat.webp", "cat_treat": "../images/cat_treat.webp", "cat_vit": "../images/cat_vit.webp", "cat_bed": "../images/cat_bed.webp", "cat_pad": "../images/cat_pad.webp", "cat_acc": "../images/cat_acc.webp"};
 const PHONE_WA = "79829195210"; // WhatsApp / телефон
 const TG = "https://t.me/qwesyt66"; // личный чат для заказов
 const VK = "https://vk.me/zoolavka66"; // чат сообщества ВКонтакте
@@ -42,8 +42,8 @@ const PRODUCTS = [
    {id:"c1", cat:"cat", soldout:true, name:"Корм Myfoodie - курица и клюква", desc:"Для взрослых кошек · 1,25 кг", img:"cat_chicken", variants:[{l:"1,25 кг",p:1500}]},
    {id:"t1", cat:"treat", name:"Мясные палочки - говядина и треска", desc:"Global Natural · 360 г", img:"treat_stick_beef", price:700},
    {id:"t2", cat:"treat", name:"Мясные палочки - курица", desc:"Global Natural · 360 г", img:"treat_stick_chick", price:700},
-   {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_beef", price:500},
-   {id:"t4", cat:"treat", name:"Мясные кубики - утка", desc:"Сушёное мясо (freeze-dried) · 100 г", img:"treat_cube_duck", price:500},
+   {id:"t3", cat:"treat", name:"Мясные кубики - говядина", desc:"Freeze-dried · для собак и кошек · 100 г", img:"treat_cube_beef", price:500},
+   {id:"t4", cat:"treat", name:"Мясные кубики - утка", desc:"Freeze-dried · для собак и кошек · 100 г", img:"treat_cube_duck", price:500},
    {id:"t5", cat:"treat", name:"Мясные кубики с начинкой - говядина", desc:"Аргентинская говядина · 180 г", img:"treat_cube_beef2", price:600},
    {id:"v1", cat:"vit", name:"Витамины Myfoodie для собак - мультивитамины", desc:"Витамины · 100 г", img:"vit_multi2", price:800},
    {id:"v2", cat:"vit", name:"Витамины Myfoodie для собак - молочный кальций", desc:"Витамины с кальцием · 100 г", img:"vit_calcium2", price:800},
@@ -109,9 +109,98 @@ const DETAILS = {
             ],
             usage:`Давайте как лакомство, целиком или раскрошив в корм. Дозировка зависит от веса собаки и указана на упаковке. Перед курсом для щенков, беременных собак и собак с хроническими заболеваниями лучше проконсультироваться с ветеринаром.`,
             facts:[["Бренд","Myfoodie"],["Форма","жевательные таблетки"],["Вес","100 г"],["Для кого","собаки всех пород"]]
+     },
+     t1: {
+            about:`Мясные палочки-сэндвич для собак всех пород. В основе новозеландская говядина (60%) и треска (10%), дополнительно курица.
+
+Много белка (32%), а текстура сэндвича нравится собакам, поэтому палочки хорошо едят даже привередливые. Производство одобрено FDA.`,
+            features:[
+                   "Говядина: аминокислоты и поддержка обмена веществ",
+                   "Треска: белок, витамины A и D",
+                   "Курица: легкоусвояемый белок",
+                   "Без искусственных добавок"
+            ],
+            usage:`Давайте как лакомство или поощрение на дрессировке. Щенкам и мини-породам (1–5 кг) от половины до 1 палочки в день. Лакомство не заменяет основной корм.`,
+            facts:[["Бренд","Myfoodie Global Natural"],["Белок","≥ 32%"],["Вес","360 г"],["Для кого","собаки всех пород"]]
+     },
+     t3: {
+            about:`Сублимированные кубики для собак и кошек: 99,8% животного белка, без злаков и наполнителей. Внутри мясо, сердце, печень, мясо с косточкой и яйцо.
+
+Кубики высушены методом лиофилизации при -36°C, поэтому питательные вещества сохраняются. Говядина из Новой Зеландии богата железом и аминокислотами.`,
+            features:[
+                   "99,8% животного белка",
+                   "Без злаков и наполнителей",
+                   "Лёгкие кубики, легко ломаются и жуются",
+                   "Сильный мясной аромат"
+            ],
+            usage:`Давайте как лакомство, на дрессировке или раскрошите в корм, чтобы разбудить аппетит. Лакомство не заменяет основной корм.`,
+            facts:[["Бренд","Myfoodie Freeze-Dried Raw"],["Белок","≥ 70%"],["Вес","100 г"],["Для кого","собаки и кошки"]]
+     },
+     t4: {
+            about:`Сублимированные кубики для собак и кошек: 99,8% животного белка, без злаков и наполнителей. Внутри мясо, сердце, печень, мясо с косточкой и яйцо.
+
+Утка считается гипоаллергенным белком, поэтому подходит питомцам с чувствительным пищеварением. Кубики высушены методом лиофилизации при -36°C, питательные вещества сохраняются.`,
+            features:[
+                   "99,8% животного белка",
+                   "Утка: гипоаллергенный белок",
+                   "Без злаков и наполнителей",
+                   "Лёгкие кубики, легко ломаются и жуются"
+            ],
+            usage:`Давайте как лакомство, на дрессировке или раскрошите в корм, чтобы разбудить аппетит. Лакомство не заменяет основной корм.`,
+            facts:[["Бренд","Myfoodie Freeze-Dried Raw"],["Белок","≥ 70%"],["Вес","100 г"],["Для кого","собаки и кошки"]]
+     },
+     t2: {
+            about:`Мясные палочки из курицы от Myfoodie, линейка Global Natural. Курица легко усваивается и подходит собакам любых размеров.
+
+Палочки легко ломаются, поэтому их удобно делить на кусочки для маленьких собак и щенков. Хорошо подходят для дрессировки и поощрения на прогулке.`,
+            features:[
+                   "Курица: легкоусвояемый белок",
+                   "Легко ломаются на кусочки",
+                   "Удобны для дрессировки",
+                   "Упаковка с zip-замком"
+            ],
+            usage:`Давайте как лакомство или поощрение. Норма зависит от веса собаки и указана на упаковке. Лакомство не заменяет основной корм.`,
+            facts:[["Бренд","Myfoodie Global Natural"],["Вес","360 г"],["Для кого","собаки всех пород"]]
+     },
+     t5: {
+            about:`Мясные кубики из говядины с начинкой внутри от Myfoodie. Снаружи плотное мясо, внутри нежная начинка: такое сочетание текстур нравится даже разборчивым собакам.
+
+Небольшой размер кубиков удобен для поощрения и дрессировки. Можно давать как ежедневное угощение или добавлять в корм, чтобы повысить интерес к еде.`,
+            features:[
+                   "Говядина снаружи, начинка внутри",
+                   "Удобный размер для дрессировки",
+                   "Подходят щенкам и взрослым собакам",
+                   "Плотная банка с крышкой"
+            ],
+            usage:`Давайте как лакомство или поощрение. Норма зависит от веса собаки и указана на упаковке. Лакомство не заменяет основной корм.`,
+            facts:[["Бренд","Myfoodie"],["Вес","180 г"],["Для кого","собаки"]]
      }
 };
 const COMPOSITION = {
+     t1: `🥩 Состав:
+     Замороженная говядина (60%), треска (10%), свежая курица, изолят соевого белка, яичный порошок, злаковая мука, кукурузный крахмал
+     🔬 Пищевая ценность:
+     Белок: ≥ 32%
+     Жир: ≥ 1%
+     Зола: ≤ 4%
+     Клетчатка: ≤ 3%
+     Влага: ≤ 20%`,
+     t3: `🥩 Состав:
+     Говядина (40%), курица, сердце, печень, говядина с костью, яйца, витамин E
+     🔬 Пищевая ценность:
+     Белок: ≥ 70%
+     Жир: ≥ 3%
+     Клетчатка: ≤ 4%
+     Зола: ≤ 7%
+     Влага: ≤ 8%`,
+     t4: `🥩 Состав:
+     Утка (40%), курица, сердце, печень, утка с костью, яйца, витамин E
+     🔬 Пищевая ценность:
+     Белок: ≥ 70%
+     Жир: ≥ 3%
+     Клетчатка: ≤ 4%
+     Зола: ≤ 7%
+     Влага: ≤ 8%`,
      d2: `🥩 Состав:
      Говядина (30%), свежая курица, куриный белок
      Костная мука говядины, картофельный крахмал, маниоковая мука
